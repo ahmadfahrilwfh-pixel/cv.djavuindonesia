@@ -5,16 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>CV. Djavu Indonesia - Jasa Konveksi & Garment Profesional</title>
-    <meta name="description" content="CV. Djavu Indonesia adalah penyedia jasa pembuatan pakaian, kaos sablon, kemeja PDL, PDH, jas, polo shirt, dan jaket dengan kualitas standar garment premium di Indonesia.">
-    <meta name="keywords" content="konveksi, garment, jasa pembuatan pakaian, buat kaos, kemeja PDL, seragam PDH, jas almamater, jaket bomber, seragam kantor, sablon, bordir, CV Djavu Indonesia, konveksi terdekat">
+    
+    <meta name="description" content="CV. Djavu Indonesia adalah penyedia jasa pembuatan pakaian, kaos sablon, kemeja PDL, PDH, jas, polo shirt, dan jaket dengan kualitas standar garment premium di Indonesia. Pesan sekarang untuk harga terjangkau!">
+    
+    <meta name="keywords" content="buat kaos, garment, buat kaos murah,jasa pembuatan pakaian, buat kaos terjangkau, konveksi, buat pdl murah, buat pdh murah, kaos custom, buat jaket murah, buat seragam, kemeja PDL, seragam PDH, jas almamater, jaket bomber, seragam kantor, sablon, bordir, CV Djavu Indonesia, konveksi terdekat, vendor seragam">
+    
     <meta name="author" content="Ahmad Fahril">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     
     <meta property="og:title" content="CV. Djavu Indonesia - Jasa Konveksi & Garment">
-    <meta property="og:description" content="Pusat pembuatan seragam, PDL, PDH, Kaos, dan Jaket dengan kualitas terbaik.">
+    <meta property="og:description" content="Pusat pembuatan seragam, PDL, PDH, Kaos, dan Jaket dengan kualitas terbaik. Buat seragam impian Anda dengan harga terjangkau.">
     <meta property="og:image" content="./logo.webp">
-    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://djavuind.id"> <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CV. Djavu Indonesia - Jasa Konveksi & Garment">
+    <meta name="twitter:description" content="Pusat pembuatan seragam, PDL, PDH, Kaos, dan Jaket dengan kualitas terbaik. Buat seragam murah dan berkualitas.">
+    <meta name="twitter:image" content="./logo.webp">
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "CV. Djavu Indonesia",
+      "image": "https://djavuindonesia.com/logo.webp", 
+      "@id": "https://djavuindonesia.com",
+      "url": "https://djavuindonesia.com",
+      "telephone": "+6281369602596",
+      "description": "Pusat pembuatan pakaian, kaos custom, buat PDL murah, PDH, jaket, dan seragam dengan kualitas garment premium di Indonesia.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jl. Jend. Sudirman, Kadilayar, Kajoran, Kec. Klaten Sel., Kabupaten Klaten, Jawa Tengah 57426", 
+        "addressLocality": "Kabupaten Klaten", 
+        "addressRegion": "Jawa Tengah ", 
+        "postalCode": "57426",
+        "addressCountry": "ID"
+      },
+      "sameAs": [
+        "https://instagram.com/djavuindonesia.official", 
+        "https://tiktok.com/@djavuindonesia.official",
+        "https://facebook.com/djavuindonesia.official"
+      ],
+      "priceRange": "Rp"
+    }
+    </script>
+   
     <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
     <link rel="shortcut icon" href="./favicon/favicon.ico" />
@@ -75,9 +111,9 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-                        transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-                        filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                        filter 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform: scale(1);
             filter: blur(0px);
             will-change: transform, opacity, filter;
@@ -99,6 +135,7 @@
             display: block;
             z-index: 1;
             transition: filter 0.3s ease;
+            will-change: filter; /* Optimasi hardware acceleration */
         }
 
         .loader-ui-overlay {
@@ -123,7 +160,7 @@
             letter-spacing: 6px;
             text-align: center;
             opacity: 0;
-            animation: fadeInUI 0.8s ease forwards 0.1s;
+            animation: fadeInUI 0.6s ease forwards 0.1s; /* Dipercepat */
             text-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
         }
 
@@ -136,7 +173,7 @@
             letter-spacing: 5px;
             text-align: center;
             opacity: 0;
-            animation: fadeInUI 0.8s ease forwards 0.2s;
+            animation: fadeInUI 0.6s ease forwards 0.2s; /* Dipercepat */
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
@@ -145,8 +182,9 @@
         }
 
         .lightning-flash-screen {
-            animation: flashTime 0.25s ease-out forwards;
+            animation: flashTime 0.2s ease-out forwards; /* Dipercepat */
         }
+        
         @keyframes flashTime {
             0% { background-color: #0a0a0f; }
             15% { background-color: #ffffff; }
@@ -154,8 +192,9 @@
             100% { background-color: #0a0a0f; }
         }
 
+        /* Menggunakan CSS Filter untuk Glow, bukan Canvas shadowBlur yang memakan memory */
         .loader-canvas-glow {
-            filter: drop-shadow(0 0 25px #d4af37) drop-shadow(0 0 50px rgba(212, 175, 55, 0.4));
+            filter: drop-shadow(0 0 20px #d4af37) drop-shadow(0 0 40px rgba(212, 175, 55, 0.4));
         }
 
         /* --- REVEAL MECHANISM MAIN HOMEPAGE --- */
@@ -816,7 +855,7 @@
                         <img src="./real_6.webp" alt="Real Pick Jaket Sport" class="img-real">
                     </div>
                     <div class="item-info">
-                        <h3>Lacoste Lengan Panjang</h3>
+                        <h3>Jaket Racing</h3>
                         <p>Aksen sporty, jahitan kuat, sangat cocok untuk tim otomotif maupun komunitas motor.</p>
                     </div>
                 </div>
@@ -871,8 +910,7 @@
             </div>
         </div>
 
-
-		<div class="fabric-info-section">
+        <div class="fabric-info-section">
             <div class="fabric-header">
                 <i class="fas fa-cube" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Cotton CVC Pique Hexagon</h3>
@@ -934,7 +972,6 @@
                     <p class="fabric-box-desc">Meninggalkan kesan mewah melalui corak rajut berlian yang jarang ditemui di pasaran umum.</p>
                 </div>
             </div>
-		<!-- Tambahan Tombol Katalog Warna Kain -->
             <div style="text-align: center;">
                 <a href="warna-kain.html" class="color-selection-btn">
                     <i class="fas fa-palette"></i>  Lihat Mock Up dan Pilihan Warna Kain
@@ -942,7 +979,7 @@
             </div>
         </div>
 
-<div class="fabric-info-section">
+        <div class="fabric-info-section">
             <div class="fabric-header">
                 <i class="fas fa-tshirt" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Cotton Combed Premium</h3>
@@ -979,7 +1016,8 @@
                 </a>
             </div>
         </div>
-<div class="fabric-info-section">
+
+        <div class="fabric-info-section">
             <div class="fabric-header">
                 <i class="fas fa-user-shield" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Nagata Drill</h3>
@@ -1006,8 +1044,6 @@
                 </a>
             </div>
         </div>
-        </div>
-
     </section>
 
     <section id="location">
@@ -1019,22 +1055,21 @@
 
    <footer id="contact">
         <h2 class="section-title" style="margin-bottom: 15px;">Hubungi Kami</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Wujudkan seragam impian dengan konsultasi desain dan penawaran harga gratis bersama CV. Djavu Indonesia.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Wujudkan seragam impian dengan konsultasi desain dan penawaran harga gratis bersama CV. Djavu Indonesia. info@djavuindonesia.com</p>
         
         <div class="social-links">
             <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://instagram.com/djavuind.id" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <!-- Tambahan TikTok & Facebook -->
-            <a href="https://tiktok.com/@djavuind.id" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="https://facebook.com/djavuind.id" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="mailto:info@djavuind.id" target="_blank" title="Email"><i class="far fa-envelope"></i></a>
+            <a href="https://instagram.com/djavuindonesia.official" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@djavuindonesia.official" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://facebook.com/djavuindonesia.official" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:info@djavuindonesia.com" target="_blank" title="Email"><i class="far fa-envelope"></i></a>
         </div>
         
         <div class="footer-bottom">
             <div class="copyright">© 2026 CV. Djavu Indonesia. All Rights Reserved.</div>
             <div class="developer-tag">
                 developed by Ahmad Fahril 
-                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release">v1.26.06.10.19</span>
+                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release">v1.26.06.10.20</span>
             </div>
         </div>
     </footer>
@@ -1091,7 +1126,7 @@
         lLogoImg.onerror = function() {
             loaderContainer.classList.add('fade-out-cinematic'); 
             document.body.classList.add('site-active');
-            setTimeout(() => loaderContainer.style.display = 'none', 650); 
+            setTimeout(() => loaderContainer.style.display = 'none', 500); 
         };
 
         function calculateLoaderLogoPos() {
@@ -1109,26 +1144,27 @@
                 this.origX = dx; this.origY = dy;
                 this.x = dx; this.y = dy;
                 this.dw = dw; this.dh = dh;
-                this.vx = (Math.random() - 0.5) * 22;
-                this.vy = (Math.random() - 0.5) * 22 - Math.random() * 6; 
+                // Optimasi velositas pecahan partikel
+                this.vx = (Math.random() - 0.5) * 25; 
+                this.vy = (Math.random() - 0.5) * 25 - Math.random() * 8; 
                 this.angle = 0;
-                this.va = (Math.random() - 0.5) * 0.3; 
+                this.va = (Math.random() - 0.5) * 0.4; 
                 this.alpha = 1;
                 this.burnProgress = 0; 
             }
             updateShatter() {
                 this.x += this.vx; this.y += this.vy; this.angle += this.va;
-                this.vx *= 0.97; this.vy *= 0.97; this.vy += 0.15; 
-                this.burnProgress += (1 - this.burnProgress) * 0.025; 
-                this.alpha -= 0.007; 
+                this.vx *= 0.95; this.vy *= 0.95; this.vy += 0.2; // Mempercepat gravity check
+                this.burnProgress += (1 - this.burnProgress) * 0.04; 
+                this.alpha -= 0.01; 
                 if (this.alpha < 0) this.alpha = 0;
             }
             updateReverse() {
-                this.x += (this.origX - this.x) * 0.12;
-                this.y += (this.origY - this.y) * 0.12;
-                this.angle += (0 - this.angle) * 0.12;
-                this.burnProgress += (0 - this.burnProgress) * 0.12;
-                this.alpha += (1 - this.alpha) * 0.12;
+                this.x += (this.origX - this.x) * 0.18; // Mempercepat reverse (awalnya 0.12)
+                this.y += (this.origY - this.y) * 0.18;
+                this.angle += (0 - this.angle) * 0.18;
+                this.burnProgress += (0 - this.burnProgress) * 0.18;
+                this.alpha += (1 - this.alpha) * 0.18;
             }
             draw() {
                 if (this.alpha <= 0) return;
@@ -1151,7 +1187,7 @@
             const imgData = lCtx.getImageData(lLogoRect.x, lLogoRect.y, lLogoRect.w, lLogoRect.h);
             lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
 
-            const cols = 9; const rows = 9;
+            const cols = 8; const rows = 8; // Dikurangi 1 matrix untuk meringankan loop first load
             const srcBlockW = lLogoImg.naturalWidth / cols; const srcBlockH = lLogoImg.naturalHeight / rows;
             const destBlockW = lLogoRect.w / cols; const destBlockH = lLogoRect.h / rows;
             lParticles = [];
@@ -1171,7 +1207,7 @@
             }
         }
 
-        // OPTIMASI TIMELINE: Dipercepat total ke 200 frame agar responsif dan anti lemot
+        // OPTIMASI TIMELINE: Dipercepat total ke 120 frame agar sangat responsif saat website diload pertama kali
         function animateLoader() {
             if (!lLogoLoaded || lCurrentPhase === 4) return;
             lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
@@ -1180,36 +1216,34 @@
             if (lTimeline === 1) { 
                 lCurrentPhase = 0; 
             } 
-            else if (lTimeline === 45) { 
+            else if (lTimeline === 25) { // Dipercepat dari 45 
                 lCurrentPhase = 1; 
                 loaderContainer.classList.add('lightning-flash-screen');
-                setTimeout(() => loaderContainer.classList.remove('lightning-flash-screen'), 250);
+                setTimeout(() => loaderContainer.classList.remove('lightning-flash-screen'), 200);
             } 
-            else if (lTimeline === 110) { 
+            else if (lTimeline === 65) { // Dipercepat dari 110
                 lCurrentPhase = 2; 
             } 
-            else if (lTimeline === 155) { 
+            else if (lTimeline === 95) { // Dipercepat dari 155
                 lCurrentPhase = 3; 
+                // PENINGKATAN PERFORMA: shadowBlur dimatikan pada canvas (karena berat), diganti dengan CSS Filter pada tag HTML class 'loader-canvas-glow'
                 loaderCanvas.classList.add('loader-canvas-glow');
             } 
-            else if (lTimeline === 200) {
+            else if (lTimeline === 120) { // Dipercepat selesai di frame 120 (dari 200)
                 lCurrentPhase = 4;
                 loaderContainer.classList.add('fade-out-cinematic'); 
                 document.body.classList.add('site-active'); 
                 setTimeout(() => {
                     loaderContainer.style.display = 'none';
-                    lParticles = []; // Membersihkan memori fragments
+                    lParticles = []; // Membersihkan memori fragments agar tidak menjadi beban background
                     cancelAnimationFrame(lAnimationId);
-                }, 650);
+                }, 500);
                 return;
             }
 
             if (lCurrentPhase === 0 || lCurrentPhase === 3) {
-                if (lCurrentPhase === 3) { lCtx.shadowBlur = 25; lCtx.shadowColor = "rgba(212, 175, 55, 0.85)"; } 
-                else { lCtx.shadowBlur = 0; }
                 lCtx.drawImage(lLogoImg, lLogoRect.x, lLogoRect.y, lLogoRect.w, lLogoRect.h);
             } else {
-                lCtx.shadowBlur = 0;
                 lParticles.forEach(p => {
                     if (lCurrentPhase === 1) p.updateShatter();
                     if (lCurrentPhase === 2) p.updateReverse();
@@ -1282,7 +1316,6 @@
             width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
             particles = [];
             const baseDivisor = width < 768 ? 50 : 35;
-            // Membatasi jumlah partikel maksimal 45 agar rendering background sangat ringan di HP/Laptop
             const particleCount = Math.min(Math.floor(width / baseDivisor), 45); 
             for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
         }
