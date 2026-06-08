@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mockup Model Realistis - Cotton Combed</title>
+    
+    <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+    <link rel="shortcut icon" href="./favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="./favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --primary-dark: #22293B;
+            --text-muted: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* PERUBAHAN: Memperluas container utama agar layout berasa lapang dan premium */
+        .container {
+            max-width: 1150px; 
+            width: 100%;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 50px; /* Jarak antar kolom diperlebar agar tidak berhimpitan */
+            flex-wrap: wrap;
+            box-sizing: border-box;
+        }
+
+        /* Judul */
+        .title-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 5px;
+            color: var(--primary-dark); 
+        }
+        
+        .title-header h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .title-header p {
+            margin: 5px 0 15px 0;
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Disclaimer Area */
+        .disclaimer-full {
+            width: 100%;
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 5px solid #ffeeba;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Fitur Kontrol Baru (Pencarian & Toggle) */
+        .control-panel {
+            background: #fdfdfd;
+            border: 1px solid #e9ecef;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin-bottom: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+        }
+
+        .toggle-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .switch-label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            background: #e9ecef;
+            padding: 3px;
+            border-radius: 6px;
+        }
+
+        .toggle-btn {
+            border: none;
+            background: transparent;
+            padding: 6px 14px;
+            font-size: 12.5px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #6c757d;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary-dark);
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .control-note {
+            margin: 10px 0 0 0;
+            font-size: 11.5px;
+            color: #6c757d;
+            line-height: 1.4;
+            background: #f1f3f5;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #6c757d;
+        }
+
+        /* PERUBAHAN: Menyesuaikan min-width luar agar seimbang dengan ukuran maksimal mockup */
+        .model-section {
+            flex: 1;
+            min-width: 400px; 
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ==========================================================================
+           MOCKUP AREA (TIDAK DIUBAH SAMA SEKALI - DIJAMIN 100% AMAN HINGGA LAYER INTERNAL)
+           ========================================================================== */
+        .mockup-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 3 / 4; 
+            background-color: #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+            height: max-content;
+        }
+
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .layer-base {
+            background-image: url('model-base-kaos.webp');
+            z-index: 1;
+        }
+
+        .layer-color {
+            z-index: 2;
+            background-color: #F4F4F6;
+            -webkit-mask-image: url('mask-kaos.png');
+            mask-image: url('mask-kaos.png');
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transition: background-color 0.4s ease;
+            mix-blend-mode: multiply; 
+        }
+
+        .layer-texture {
+            background-image: url('texture-cotton.webp');
+            z-index: 3;
+            -webkit-mask-image: url('mask-kaos.png');
+            mask-image: url('mask-kaos.png');
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-position: center;
+            mask-position: center;
+            mix-blend-mode: multiply; 
+            opacity: 0.82; 
+            pointer-events: none; 
+        }
+        /* ========================================================================== */
+
+        /* Palette Area */
+        .palette-section {
+            flex: 1.3;
+            min-width: 320px;
+        }
+
+        .color-info {
+            background: #f1f3f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .color-info h3 { margin: 0 0 5px 0; font-size: 22px; }
+        .color-info p { margin: 0; color: #6c757d; font-size: 14px; }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Scrollbar custom untuk grid */
+        .color-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .color-grid::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 8px;
+        }
+        .color-grid::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 8px;
+        }
+        .color-grid::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .color-item:hover {
+            background: #f1f3f5;
+        }
+
+        .color-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .color-item.active .color-circle {
+            border: 3px solid #000;
+            transform: scale(1.1);
+        }
+
+        .color-label { font-size: 11px; text-align: center; font-weight: 500; color: #333; }
+        .color-code { font-size: 10px; color: #6c757d; text-align: center; }
+
+        /* FOOTER COMPONENT STYLING */
+        .footer-bottom {
+            width: 100%;
+            max-width: 1150px;
+            margin-top: 35px;
+            background-color: var(--primary-dark);
+            color: #e2e8f0;
+            padding: 20px 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .footer-bottom .copyright {
+            font-weight: 500;
+        }
+
+        .footer-bottom .developer-tag {
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* Penyesuaian Responsif untuk Layar HP */
+        @media (max-width: 992px) {
+            .container {
+                gap: 30px;
+                padding: 20px;
+            }
+            .model-section {
+                min-width: 100%;
+            }
+            .color-grid {
+                max-height: none;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title-header">
+        <h2>Cotton Combed</h2>
+        <p>Cotton Combed Mock Up</p>
+    </div>
+    <div class="disclaimer-full">
+        ⚠️ <strong>DISCLAIMER:</strong> Tampilan ini hanya simulasi ilustrasi. Warna pada monitor/HP bisa berbeda. Untuk akurasi presisi 100%, silakan cek fisik kain di workshop.
+    </div>
+
+    <div class="model-section">
+        <div class="mockup-wrapper">
+            <div class="layer layer-base"></div>
+            <div class="layer layer-color" id="baju-color"></div>
+            <div class="layer layer-texture"></div>
+        </div>
+    </div>
+
+    <div class="palette-section">
+        <div class="control-panel">
+            <div class="search-box">
+                <input type="text" id="color-search" placeholder="🔍 Cari warna berdasarkan nama, kode, atau kelompok...">
+            </div>
+            <div class="toggle-box">
+                <span class="switch-label">Metode Simulasi:</span>
+                <div class="toggle-buttons">
+                    <button id="btn-auto" class="toggle-btn">Otomatis</button>
+                    <button id="btn-manual" class="toggle-btn">Manual</button>
+                </div>
+            </div>
+            <div class="control-note">
+                <strong>Keterangan:</strong> Sistem diset secara <strong>Otomatis</strong> berganti warna secara berkala. Anda bisa mengubah ke mode <strong>Manual</strong> lewat tombol di atas, atau langsung klik pada bulatan warna di bawah untuk memilih sendiri.
+            </div>
+        </div>
+
+        <div class="color-info">
+            <h3 id="display-name">Putih Netral</h3>
+            <p id="display-cat">Kategori: P (Putih)</p>
+        </div>
+        <div class="color-grid" id="color-grid"></div>
+    </div>
+</div>
+
+    <style>
+        footer#contact {
+            width: 100%;
+            max-width: 1150px;
+            margin: 30px auto 0;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        footer#contact .section-title {
+            color: var(--primary-dark);
+            margin-top: 0;
+        }
+        
+        footer#contact .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        footer#contact .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: #f1f3f5;
+            color: var(--primary-dark);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        footer#contact .social-links a:hover {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+    </style>
+
+    <footer id="contact">
+        <h2 class="section-title" style="margin-bottom: 15px;">Hubungi Kami</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Wujudkan seragam impian dengan konsultasi desain dan penawaran harga gratis bersama CV. Djavu Indonesia.</p>
+        
+        <div class="social-links">
+            <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com/djavuind.id" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@djavuind.id" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://facebook.com/djavuind.id" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:info@djavuind.id" target="_blank" title="Email"><i class="far fa-envelope"></i></a>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="copyright">© 2026 CV. Djavu Indonesia. All Rights Reserved.</div>
+            <div class="developer-tag">
+                developed by Ahmad Fahril 
+                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release">v1.9.4</span>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Data RGB/Hex presisi dari Katalog Cotton Combed Knitto
+    const colors = [
+        // --- KELOMPOK PUTIH ---
+        { name: "Putih Netral", code: "P", desc: "Putih", hex: "#F4F4F6" },
+        { name: "Putih Bluish", code: "P", desc: "Putih", hex: "#F0F2F8" },
+
+        // --- KELOMPOK MERAH, PINK & ORANYE ---
+        { name: "Burgundy", code: "T", desc: "Tua", hex: "#58212D" },
+        { name: "Maroon", code: "T", desc: "Tua", hex: "#6B1C28" },
+        { name: "Merah Cabe", code: "T", desc: "Tua", hex: "#C81D31" },
+        { name: "Fuchsia", code: "T", desc: "Tua", hex: "#C31B5B" },
+        { name: "Bubblegum Pink", code: "M", desc: "Muda", hex: "#E783A0" },
+        { name: "Pastel Pink", code: "M", desc: "Muda", hex: "#F0A7B9" },
+        { name: "Pink", code: "M", desc: "Muda", hex: "#F6A9C5" },
+        { name: "Muted Pink", code: "M", desc: "Muda", hex: "#F3CCD0" },
+        { name: "Baby Pink", code: "M", desc: "Muda", hex: "#F4D0D8" },
+        { name: "Dusty Pink", code: "M", desc: "Muda", hex: "#DCAEA9" },
+        { name: "Soft Peach", code: "M", desc: "Muda", hex: "#E5C0B3" },
+        { name: "Woodrose", code: "M", desc: "Muda", hex: "#A78C91" },
+        { name: "Peony Pink", code: "M", desc: "Muda", hex: "#D78B94" },
+        { name: "Dusty Rose", code: "S", desc: "Sedang", hex: "#B47076" },
+        { name: "Blush Red", code: "S", desc: "Sedang", hex: "#A24A53" },
+        { name: "Red Plum", code: "T", desc: "Tua", hex: "#6B3741" },
+        { name: "Rustic Orchid", code: "S", desc: "Sedang", hex: "#8A5A5C" },
+        { name: "Terracotta", code: "S", desc: "Sedang", hex: "#A65D4F" },
+        { name: "Baby Peach", code: "M", desc: "Muda", hex: "#E9AB8C" },
+        { name: "Dusty Peach", code: "M", desc: "Muda", hex: "#D59885" },
+        { name: "Salem", code: "M", desc: "Muda", hex: "#F19890" },
+        { name: "Salmon Red", code: "S", desc: "Sedang", hex: "#E4625A" },
+        { name: "Autumn Orange", code: "T", desc: "Tua", hex: "#944627" },
+        { name: "Orange Bata", code: "T", desc: "Tua", hex: "#B64A22" },
+        { name: "Orange", code: "S", desc: "Sedang", hex: "#EE5921" },
+        { name: "Bright Orange", code: "S", desc: "Sedang", hex: "#F67A18" },
+        { name: "Kuning Mas", code: "S", desc: "Sedang", hex: "#F29C17" },
+        { name: "Kuning Kenari", code: "S", desc: "Sedang", hex: "#FAD323" },
+        { name: "Kuning Lemon", code: "S", desc: "Sedang", hex: "#FBE427" },
+        { name: "Baby Yellow", code: "M", desc: "Muda", hex: "#FDF388" },
+
+        // --- KELOMPOK KUNING, COKLAT & HIJAU BUMI ---
+        { name: "Butter", code: "M", desc: "Muda", hex: "#FBE790" },
+        { name: "Honey", code: "S", desc: "Sedang", hex: "#DB9D33" },
+        { name: "Mustard", code: "S", desc: "Sedang", hex: "#C88A2A" },
+        { name: "Dijon Yellow", code: "S", desc: "Sedang", hex: "#A78D2A" },
+        { name: "Old Gold", code: "S", desc: "Sedang", hex: "#C27222" },
+        { name: "Dark Mustard", code: "T", desc: "Tua", hex: "#926323" },
+        { name: "Almond Brown", code: "S", desc: "Sedang", hex: "#8D6548" },
+        { name: "Cinnamon", code: "T", desc: "Tua", hex: "#6D4330" },
+        { name: "Toffee", code: "T", desc: "Tua", hex: "#594132" },
+        { name: "Chocolate", code: "S", desc: "Sedang", hex: "#473229" },
+        { name: "Coklat Kopi", code: "T", desc: "Tua", hex: "#372D2B" },
+        { name: "Maple Brown", code: "S", desc: "Sedang", hex: "#6A5C54" },
+        { name: "Coklat Susu", code: "S", desc: "Sedang", hex: "#867362" },
+        { name: "Light Brown", code: "M", desc: "Muda", hex: "#AFA191" },
+        { name: "Beige", code: "M", desc: "Muda", hex: "#D1C0AA" },
+        { name: "Cream", code: "M", desc: "Muda", hex: "#F1E3CD" },
+        { name: "Light Latte", code: "M", desc: "Muda", hex: "#D9D0C5" },
+        { name: "Champagne", code: "M", desc: "Muda", hex: "#D1C7AE" },
+        { name: "Safari", code: "M", desc: "Muda", hex: "#968E70" },
+        { name: "Dark Olive", code: "T", desc: "Tua", hex: "#545340" },
+        { name: "Hijau TNI", code: "T", desc: "Tua", hex: "#3F4332" },
+        { name: "Army Green", code: "T", desc: "Tua", hex: "#434A38" },
+        { name: "Pine Green", code: "T", desc: "Tua", hex: "#354830" },
+        { name: "Cactus Green", code: "T", desc: "Tua", hex: "#455A41" },
+        { name: "Stone Green", code: "T", desc: "Tua", hex: "#4B6953" },
+        { name: "Mineral Green", code: "S", desc: "Sedang", hex: "#567A6B" },
+        { name: "Ash Green", code: "S", desc: "Sedang", hex: "#5B6E63" },
+        { name: "Olive Green", code: "S", desc: "Sedang", hex: "#7D835E" },
+        { name: "Sage Green", code: "S", desc: "Sedang", hex: "#788B77" },
+        { name: "Khaki", code: "S", desc: "Sedang", hex: "#959886" },
+
+        // --- KELOMPOK HIJAU & BIRU ---
+        { name: "Seafoam Green", code: "M", desc: "Muda", hex: "#ADC8B9" },
+        { name: "Golden Lime", code: "S", desc: "Sedang", hex: "#9C9E2B" },
+        { name: "Electric Lime", code: "S", desc: "Sedang", hex: "#CBE02D" },
+        { name: "Hijau Pucuk", code: "S", desc: "Sedang", hex: "#85C740" },
+        { name: "Hijau Fuji", code: "T", desc: "Tua", hex: "#1B9143" },
+        { name: "Forest Green", code: "S", desc: "Sedang", hex: "#264736" },
+        { name: "Hijau Botol Special", code: "T", desc: "Tua", hex: "#213B34" },
+        { name: "Hijau Botol", code: "T", desc: "Tua", hex: "#274239" },
+        { name: "Atlantic Sea", code: "T", desc: "Tua", hex: "#284A54" },
+        { name: "Tosca Tua", code: "T", desc: "Tua", hex: "#2E6160" },
+        { name: "Tosca", code: "T", desc: "Tua", hex: "#1A8671" },
+        { name: "Tosca Muda", code: "M", desc: "Muda", hex: "#7BC1B0" },
+        { name: "Hijau Mint", code: "M", desc: "Muda", hex: "#8BD2B2" },
+        { name: "Harbor Green", code: "M", desc: "Muda", hex: "#9BBAB1" },
+        { name: "Aqua Haze", code: "M", desc: "Muda", hex: "#AED2D4" },
+        { name: "Cameo Blue", code: "S", desc: "Sedang", hex: "#678B9B" },
+        { name: "Ash Blue", code: "S", desc: "Sedang", hex: "#5C7486" },
+        { name: "Mineral Blue", code: "S", desc: "Sedang", hex: "#415E6D" },
+        { name: "Biru Tosca", code: "T", desc: "Tua", hex: "#1B6A7F" },
+        { name: "Deep Blue", code: "T", desc: "Tua", hex: "#22486A" },
+        { name: "Ocean Blue", code: "T", desc: "Tua", hex: "#214975" },
+        { name: "Denim Blue", code: "S", desc: "Sedang", hex: "#345071" },
+        { name: "Steel Blue", code: "S", desc: "Sedang", hex: "#4C6584" },
+        { name: "Smoke Blue", code: "S", desc: "Sedang", hex: "#587E92" },
+        { name: "Dusty Blue", code: "S", desc: "Sedang", hex: "#6C809B" },
+        { name: "Palladian Blue", code: "M", desc: "Muda", hex: "#99ADC1" },
+        { name: "Pastel Blue", code: "M", desc: "Muda", hex: "#A1B2D3" },
+        { name: "Sky Blue", code: "M", desc: "Muda", hex: "#6A9BCE" },
+        { name: "Biru Muda", code: "M", desc: "Muda", hex: "#659BD3" },
+        { name: "Turkis Muda", code: "M", desc: "Muda", hex: "#5CBEE1" },
+
+        // --- KELOMPOK BIRU TUA, UNGU, HITAM & ABU-ABU ---
+        { name: "Turkis", code: "T", desc: "Tua", hex: "#1181B1" },
+        { name: "Turkis Tua", code: "T", desc: "Tua", hex: "#106798" },
+        { name: "Benhur Special", code: "TS", desc: "Tua Special", hex: "#213978" },
+        { name: "Light Navy", code: "T", desc: "Tua", hex: "#1C2943" },
+        { name: "Navy", code: "T", desc: "Tua", hex: "#22293B" },
+        { name: "Ungu Tua", code: "T", desc: "Tua", hex: "#382746" },
+        { name: "Royal Purple", code: "T", desc: "Tua", hex: "#5B3968" },
+        { name: "Lavender", code: "M", desc: "Muda", hex: "#A083B8" },
+        { name: "Lilac", code: "M", desc: "Muda", hex: "#B18DBA" },
+        { name: "Dusty Lilac", code: "M", desc: "Muda", hex: "#978393" },
+        { name: "Pale Berry", code: "S", desc: "Sedang", hex: "#8A6076" },
+        { name: "Twilight Mauve", code: "S", desc: "Sedang", hex: "#6D5561" },
+        { name: "Dusty Violet", code: "S", desc: "Sedang", hex: "#7D556C" },
+        { name: "Vintage Violet", code: "S", desc: "Sedang", hex: "#624256" },
+        { name: "Magenta", code: "T", desc: "Tua", hex: "#74204D" },
+        { name: "Hitam Reaktif", code: "T", desc: "Tua", hex: "#1D1C1F" },
+        { name: "Hitam Sulfur", code: "HS", desc: "Hitam Sulfur", hex: "#1E1E1E" },
+        { name: "Jet Black", code: "JB", desc: "Jet Black", hex: "#18181A" },
+        { name: "Black Evo", code: "S", desc: "Sedang", hex: "#212121" },
+        { name: "Jet Black Evo", code: "T", desc: "Tua", hex: "#1B1B1D" },
+        { name: "Smoke Jet Black", code: "ST", desc: "Sedang Tua", hex: "#2A2A2D" },
+        { name: "Smoke Black", code: "SM", desc: "Sedang Muda", hex: "#333336" },
+        { name: "Abu Tua", code: "T", desc: "Tua", hex: "#515254" },
+        { name: "Stone Grey", code: "S", desc: "Sedang", hex: "#666869" },
+        { name: "Abu Sedang", code: "S", desc: "Sedang", hex: "#818285" },
+        { name: "Misty M71 Putih Bluish", code: "MS", desc: "Misty Sedang", hex: "#B6BCC2" },
+        { name: "Misty M71A Putih Bluish", code: "MS", desc: "Misty Sedang", hex: "#9CA4AC" },
+        { name: "Light Grey", code: "M", desc: "Muda", hex: "#AEB0AD" },
+        { name: "Abu Muda", code: "M", desc: "Muda", hex: "#BEC0C2" },
+        { name: "Broken White", code: "M", desc: "Muda", hex: "#EFEBE2" }
+    ];
+
+    const grid = document.getElementById('color-grid');
+    const colorLayer = document.getElementById('baju-color');
+    const displayName = document.getElementById('display-name');
+    const displayCat = document.getElementById('display-cat');
+    
+    // Inisialisasi Elemen Kontrol Baru
+    const searchInput = document.getElementById('color-search');
+    const btnAuto = document.getElementById('btn-auto');
+    const btnManual = document.getElementById('btn-manual');
+
+    let isAutoMode = true; 
+    let autoTimer = null; 
+
+    function applyColor(colorObj, btnElement) {
+        colorLayer.style.backgroundColor = colorObj.hex;
+        displayName.textContent = colorObj.name;
+        displayCat.textContent = `Kategori: ${colorObj.code} (${colorObj.desc})`;
+
+        document.querySelectorAll('.color-item').forEach(el => el.classList.remove('active'));
+        btnElement.classList.add('active');
+    }
+
+    // Render Grid Warna Dasar dengan Data Atribut Tambahan untuk Search
+    colors.forEach((color, index) => {
+        const item = document.createElement('div');
+        item.className = `color-item ${index === 0 ? 'active' : ''}`;
+        item.setAttribute('data-index', index);
+        item.setAttribute('data-searchable', `${color.name.toLowerCase()} ${color.code.toLowerCase()} ${color.desc.toLowerCase()}`);
+        
+        item.innerHTML = `
+            <div class="color-circle" style="background-color: ${color.hex};"></div>
+            <div class="color-label">${color.name}</div>
+            <div class="color-code">(${color.code})</div>
+        `;
+        
+        item.addEventListener('click', () => {
+            setSimulationMode(false);
+            applyColor(color, item);
+        });
+        grid.appendChild(item);
+    });
+
+    // SISTEM ROTASI WARNA OTOMATIS
+    function startAutoRotation() {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+            if (!isAutoMode) return;
+
+            const allItems = document.querySelectorAll('.color-item');
+            const visibleItems = Array.from(allItems).filter(el => el.style.display !== 'none');
+
+            if (visibleItems.length === 0) return;
+
+            let currentActiveIndex = visibleItems.findIndex(el => el.classList.contains('active'));
+            let nextIndex = (currentActiveIndex + 1) % visibleItems.length;
+
+            const nextItem = visibleItems[nextIndex];
+            const originalColorIndex = parseInt(nextItem.getAttribute('data-index'));
+            
+            applyColor(colors[originalColorIndex], nextItem);
+            
+        }, 2500); 
+    }
+
+    function stopAutoRotation() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    function setSimulationMode(autoMode) {
+        isAutoMode = autoMode;
+        if (isAutoMode) {
+            btnAuto.classList.add('active');
+            btnManual.classList.remove('active');
+            startAutoRotation();
+        } else {
+            btnAuto.classList.remove('active');
+            btnManual.classList.add('active');
+            stopAutoRotation();
+        }
+    }
+
+    btnAuto.addEventListener('click', () => setSimulationMode(true));
+    btnManual.addEventListener('click', () => setSimulationMode(false));
+
+    // LOGIKA FILTER PENCARIAN WARNA
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const items = document.querySelectorAll('.color-item');
+
+        items.forEach(item => {
+            const searchContent = item.getAttribute('data-searchable');
+            if (searchContent.includes(query)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    setSimulationMode(true);
+</script>
+</body>
+</html>
