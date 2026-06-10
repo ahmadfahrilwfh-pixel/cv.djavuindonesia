@@ -8,8 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
         :root {
             --primary-color: #d4af37; 
@@ -297,6 +295,7 @@
             backdrop-filter: blur(15px);
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -405,14 +404,16 @@
         // =================================================================
         const SUPABASE_URL = 'https://poleyjhuzarxihuglbhn.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvbGV5amh1emFyeGlodWdsYmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTg4MzMsImV4cCI6MjA5NjY3NDgzM30.0KeN0dPvTskEO637E9835SmMQU0nn-dZ_0oL0ET8eU8';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Diubah dari 'supabase' menjadi 'db' untuk mencegah re-declaration error dari library global CDN
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const loginOverlay = document.getElementById('loginOverlay');
         const dbStatusLabel = document.getElementById('dbStatusLabel');
 
         // Mengunci halaman apabila session token JWT milik admin belum aktif/sah
         async function checkSecureSession() {
-            const { data: { session } } = await supabase.auth.getSession();
+            const { data: { session } } = await db.auth.getSession();
             if (session) {
                 loginOverlay.style.display = 'none';
                 dbStatusLabel.className = "status-badge";
@@ -423,13 +424,13 @@
         }
         checkSecureSession();
 
-        // Autentikasi Handler Admin
+        // Autentikasi Handler Admin (Sekarang terekspos sempurna ke global window)
         async function loginAdmin() {
             const email = document.getElementById('adminEmail').value;
             const password = document.getElementById('adminPass').value;
             if(!email || !password) { alert("Sistem: Email dan sandi pengaman tidak boleh kosong!"); return; }
             
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            const { data, error } = await db.auth.signInWithPassword({ email, password });
             if (error) {
                 alert("Akses Ditolak System: Kredensial Enkripsi Salah! " + error.message);
             } else {
@@ -498,7 +499,7 @@
 
         // Membaca Data langsung dari Cluster Cloud Supabase
         async function loadTableData() {
-            const { data: products, error } = await supabase
+            const { data: products, error } = await db
                 .from('djavu_dynamic_products')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -531,7 +532,7 @@
         // Menghapus data produk dari tabel Supabase Cloud
         window.deleteProduct = async function(id) {
             if(confirm('Anda yakin ingin menghapus produk ini dari database cloud utama?')) {
-                const { error } = await supabase
+                const { error } = await db
                     .from('djavu_dynamic_products')
                     .delete()
                     .eq('id', id);
@@ -564,7 +565,7 @@
                 ]);
 
                 // Query Insert data ke tabel Supabase RLS Protected
-                const { error } = await supabase
+                const { error } = await db
                     .from('djavu_dynamic_products')
                     .insert([{
                         title: title,
