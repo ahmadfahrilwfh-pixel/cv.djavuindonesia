@@ -2,71 +2,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Garuda Code AI</title>
-
+<title>Groq Coding AI</title>
 <style>
 body{
-    background:#0f172a;
-    color:white;
     font-family:Arial;
+    max-width:1000px;
+    margin:auto;
     padding:20px;
 }
 
 textarea{
     width:100%;
-    height:180px;
-    background:#1e293b;
-    color:white;
-    border:none;
-    padding:15px;
-    border-radius:10px;
-}
-
-button{
-    padding:12px 25px;
-    background:#2563eb;
-    border:none;
-    color:white;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:10px;
+    height:200px;
 }
 
 pre{
-    background:#111827;
-    padding:15px;
-    border-radius:10px;
     white-space:pre-wrap;
-    overflow:auto;
-    margin-top:15px;
+    border:1px solid #ccc;
+    padding:15px;
+    margin-top:20px;
 }
 </style>
 </head>
 <body>
 
-<h1>GARUDA CODE AI</h1>
+<h2>Groq Coding AI</h2>
 
-<textarea id="prompt"
-placeholder="Contoh:
-Buatkan EA MT5 scalping XAUUSD M1 dengan trailing stop dinamis"></textarea>
+<input
+    type="password"
+    id="apikey"
+    placeholder="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"
+    style="width:100%;padding:10px;"
+>
 
-<br>
+<br><br>
 
-<button onclick="generateCode()">Generate Code</button>
+<textarea
+    id="prompt"
+    placeholder="Buatkan EA MT5 XAUUSD..."
+></textarea>
+
+<br><br>
+
+<button onclick="generate()">
+Generate
+</button>
 
 <pre id="result"></pre>
 
 <script>
 
-const API_KEY = "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";
+async function generate(){
 
-async function generateCode(){
+    const apiKey =
+        document.getElementById("apikey").value;
 
-    const prompt = document.getElementById("prompt").value;
+    const prompt =
+        document.getElementById("prompt").value;
 
-    document.getElementById("result").textContent = "Generating...";
+    const result =
+        document.getElementById("result");
+
+    result.textContent = "Generating...";
 
     try{
 
@@ -75,52 +72,57 @@ async function generateCode(){
             {
                 method:"POST",
                 headers:{
-                    "Authorization":"Bearer " + API_KEY,
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer "+apiKey
                 },
                 body:JSON.stringify({
-                    model:"qwen/qwen3-coder-480b",
-
-                    temperature:0.2,
-
+                    model:"llama-3.3-70b-versatile",
                     messages:[
                         {
                             role:"system",
-                            content:`
-You are an elite senior software engineer.
+                            content:
+`You are a senior software engineer.
 
 Rules:
-
-1. Generate production-ready code.
-2. No placeholders.
-3. No pseudo-code.
-4. Always provide complete files.
-5. Fix possible bugs before responding.
-6. Use best practices.
-7. Return only code unless explanation requested.
-8. Support all programming languages.
-9. Optimize performance.
-10. Check syntax before final answer.
-`
+- Generate complete code
+- No pseudocode
+- No placeholders
+- Production ready
+- Bug checked
+- Return full source code`
                         },
                         {
                             role:"user",
                             content:prompt
                         }
-                    ]
+                    ],
+                    temperature:0.2,
+                    max_tokens:4096
                 })
             }
         );
 
         const data = await response.json();
 
-        document.getElementById("result").textContent =
-            data.choices[0].message.content;
+        console.log(data);
 
-    }
-    catch(err){
-        document.getElementById("result").textContent =
-            "ERROR:\n" + err;
+        if(data.error){
+            result.textContent =
+                data.error.message;
+            return;
+        }
+
+        if(data.choices?.length){
+            result.textContent =
+                data.choices[0].message.content;
+        }else{
+            result.textContent =
+                JSON.stringify(data,null,2);
+        }
+
+    }catch(err){
+        result.textContent =
+            err.toString();
     }
 }
 
