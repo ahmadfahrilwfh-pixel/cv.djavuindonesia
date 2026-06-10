@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Garuda Code AI</title>
+
+<style>
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    padding:20px;
+}
+
+textarea{
+    width:100%;
+    height:180px;
+    background:#1e293b;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:10px;
+}
+
+button{
+    padding:12px 25px;
+    background:#2563eb;
+    border:none;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+pre{
+    background:#111827;
+    padding:15px;
+    border-radius:10px;
+    white-space:pre-wrap;
+    overflow:auto;
+    margin-top:15px;
+}
+</style>
+</head>
+<body>
+
+<h1>GARUDA CODE AI</h1>
+
+<textarea id="prompt"
+placeholder="Contoh:
+Buatkan EA MT5 scalping XAUUSD M1 dengan trailing stop dinamis"></textarea>
+
+<br>
+
+<button onclick="generateCode()">Generate Code</button>
+
+<pre id="result"></pre>
+
+<script>
+
+const API_KEY = "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";
+
+async function generateCode(){
+
+    const prompt = document.getElementById("prompt").value;
+
+    document.getElementById("result").textContent = "Generating...";
+
+    try{
+
+        const response = await fetch(
+            "https://api.groq.com/openai/v1/chat/completions",
+            {
+                method:"POST",
+                headers:{
+                    "Authorization":"Bearer " + API_KEY,
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    model:"qwen/qwen3-coder-480b",
+
+                    temperature:0.2,
+
+                    messages:[
+                        {
+                            role:"system",
+                            content:`
+You are an elite senior software engineer.
+
+Rules:
+
+1. Generate production-ready code.
+2. No placeholders.
+3. No pseudo-code.
+4. Always provide complete files.
+5. Fix possible bugs before responding.
+6. Use best practices.
+7. Return only code unless explanation requested.
+8. Support all programming languages.
+9. Optimize performance.
+10. Check syntax before final answer.
+`
+                        },
+                        {
+                            role:"user",
+                            content:prompt
+                        }
+                    ]
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        document.getElementById("result").textContent =
+            data.choices[0].message.content;
+
+    }
+    catch(err){
+        document.getElementById("result").textContent =
+            "ERROR:\n" + err;
+    }
+}
+
+</script>
+
+</body>
+</html>
