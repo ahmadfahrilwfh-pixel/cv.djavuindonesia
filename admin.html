@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIS Terminal Control | Djavu Admin</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #d4af37; 
+            --primary-glow: rgba(212, 175, 55, 0.4);
+            --bg-color: #050508;
+            --panel-bg: rgba(15, 15, 20, 0.85);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --text-main: #f0f0f0;
+            --text-muted: #8a8a9a;
+            --danger: #ff4757;
+            --success: #2ed573;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            background-image: 
+                linear-gradient(rgba(5, 5, 8, 0.9), rgba(5, 5, 8, 0.9)),
+                radial-gradient(circle at 50% 0%, var(--primary-glow) 0%, transparent 50%);
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--glass-border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-glow);
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .header-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 28px;
+            color: var(--text-main);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            padding: 5px 12px;
+            background: rgba(46, 213, 115, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* --- FORM GRID --- */
+        .form-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width { grid-column: span 2; }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        textarea { resize: vertical; min-height: 80px; }
+
+        /* Custom File Input */
+        .file-drop-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            padding: 25px;
+            border: 1px dashed var(--glass-border);
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            text-align: center;
+        }
+        .file-drop-area:hover { border-color: var(--primary-color); background: rgba(212, 175, 55, 0.05); }
+        .file-input { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-msg { font-size: 12px; color: var(--text-muted); }
+        .file-icon { font-size: 24px; color: var(--primary-color); }
+
+        .btn {
+            padding: 14px 30px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #555;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* --- DATA TABLE --- */
+        .data-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+        th {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        td img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid var(--glass-border); }
+        
+        .btn-delete {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        .btn-delete:hover { background: var(--danger); color: #fff; }
+
+        /* Loader */
+        .compression-loader {
+            display: none;
+            color: var(--primary-color);
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--glass-border); padding: 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .main-content { padding: 20px; }
+            .header-title { font-size: 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">GIS Terminal<br><span style="font-size: 12px; color: #fff; letter-spacing: 4px;">Control Panel</span></div>
+        <a href="#" class="nav-item active"><i class="fas fa-box-open"></i> Input Produk Baru</a>
+        <a href="index.html" target="_blank" class="nav-item"><i class="fas fa-globe"></i> Lihat Website</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header-title">
+            Database Produk Dinamis
+            <span class="status-badge"><i class="fas fa-satellite-dish"></i> DB: LOCAL_STORAGE [SYNCED]</span>
+        </div>
+
+        <div class="form-panel">
+            <form id="productForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nama Produk (Title)</label>
+                        <input type="text" id="prodTitle" placeholder="Contoh: Kaos Polo Premium Klaten" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pilih Kategori (Grup Baris)</label>
+                        <select id="prodCategory" required>
+                            <option value="">-- Pilih Etalase --</option>
+                            <option value="formal">Jas & Pakaian Dinas Formal</option>
+                            <option value="pdl">Kemeja Kerja Lapangan PDL & PDH</option>
+                            <option value="polo">Polo Shirt & Kaos Kerah Distro</option>
+                            <option value="kaos">Kaos Sablon Distro & Kaos Olahraga</option>
+                            <option value="bomber">Jaket Bomber Instansi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Deskripsi Singkat</label>
+                        <textarea id="prodDesc" placeholder="Ketik keunggulan produk maksimal 2 kalimat..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar 1: Model Preview</label>
+                        <div class="file-drop-area">
+                            <i class="fas fa-cloud-upload-alt file-icon"></i>
+                            <span class="file-msg" id="msgImg1">Pilih atau Tarik File Gambar Kesini</span>
+                            <input class="file-input" type="file" id="prodImg1" accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar 2: Real Pick (Asli)</label>
+                        <div class="file-drop-area">
+                            <i class="fas fa-camera file-icon"></i>
+                            <span class="file-msg" id="msgImg2">Pilih atau Tarik File Gambar Kesini</span>
+                            <input class="file-input" type="file" id="prodImg2" accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <div id="loaderStatus" class="compression-loader"><i class="fas fa-spinner fa-spin"></i> Mengompresi & Convert gambar ke WEBP...</div>
+                        <button type="submit" id="submitBtn" class="btn"><i class="fas fa-database"></i> Simpan & Publish Produk</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="data-panel">
+            <label>Data Produk Terpublish</label>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Preview</th>
+                        <th>Nama Produk</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // ENGINE: CLIENT-SIDE IMAGE COMPRESSION & WEBP CONVERTER
+        // =================================================================
+        
+        /**
+         * Fungsi untuk mengompresi dan merubah format gambar ke WebP
+         * @param {File} file - File input gambar asli
+         * @param {number} maxWidth - Lebar maksimum gambar (pixels)
+         * @param {number} quality - Kualitas kompresi WebP (0.0 - 1.0)
+         * @returns {Promise<string>} - Resolves dengan Base64 WebP Data URL
+         */
+        function compressAndConvertToWebP(file, maxWidth = 800, quality = 0.8) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Kalkulasi rasio aspek jika gambar kebesaran
+                        if (width > height && width > maxWidth) {
+                            height = Math.round(height * (maxWidth / width));
+                            width = maxWidth;
+                        } else if (height > maxWidth) {
+                            width = Math.round(width * (maxWidth / height));
+                            height = maxWidth;
+                        } else {
+                            // Jika gambar sudah kecil, biarkan resolusi aslinya
+                            width = img.width;
+                            height = img.height;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        // Menggambar image pada canvas dengan resolusi baru
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // EKSEKUSI: Convert hasil canvas ke base64 dengan format WEBP
+                        const webpDataUrl = canvas.toDataURL('image/webp', quality);
+                        resolve(webpDataUrl);
+                    };
+                    img.onerror = error => reject(error);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // =================================================================
+        // ENGINE: FORM HANDLING & LOCAL DATABASE (LOCALSTORAGE)
+        // =================================================================
+        
+        const form = document.getElementById('productForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loaderStatus = document.getElementById('loaderStatus');
+        const tableBody = document.getElementById('dataTableBody');
+
+        // Update Text File Input saat User Memilih File
+        document.getElementById('prodImg1').addEventListener('change', function(e) {
+            document.getElementById('msgImg1').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
+            document.getElementById('msgImg1').style.color = "#d4af37";
+        });
+        document.getElementById('prodImg2').addEventListener('change', function(e) {
+            document.getElementById('msgImg2').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
+            document.getElementById('msgImg2').style.color = "#d4af37";
+        });
+
+        // Load Data saat Halaman Dibuka
+        function loadTableData() {
+            const products = JSON.parse(localStorage.getItem('djavu_dynamic_products')) || [];
+            tableBody.innerHTML = '';
+            
+            if(products.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #888;">Belum ada produk tambahan.</td></tr>`;
+                return;
+            }
+
+            products.forEach((prod, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span style="background: rgba(212,175,55,0.1); color: var(--primary-color); padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase;">${prod.category}</span></td>
+                    <td><img src="${prod.img1}" alt="preview"></td>
+                    <td style="font-weight: 600;">${prod.title}</td>
+                    <td>
+                        <button class="btn-delete" onclick="deleteProduct(${index})"><i class="fas fa-trash"></i> Hapus</button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Fungsi Hapus Produk
+        window.deleteProduct = function(index) {
+            if(confirm('Anda yakin ingin menghapus produk ini dari website utama?')) {
+                let products = JSON.parse(localStorage.getItem('djavu_dynamic_products')) || [];
+                products.splice(index, 1);
+                localStorage.setItem('djavu_dynamic_products', JSON.stringify(products));
+                loadTableData();
+            }
+        };
+
+        // Submit Form Handler
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // UX: Disable button & show loader
+            submitBtn.disabled = true;
+            loaderStatus.style.display = 'block';
+
+            try {
+                const title = document.getElementById('prodTitle').value;
+                const category = document.getElementById('prodCategory').value;
+                const desc = document.getElementById('prodDesc').value;
+                
+                const fileImg1 = document.getElementById('prodImg1').files[0];
+                const fileImg2 = document.getElementById('prodImg2').files[0];
+
+                // Proses kompresi & konversi paralel
+                const [webpImg1, webpImg2] = await Promise.all([
+                    compressAndConvertToWebP(fileImg1),
+                    compressAndConvertToWebP(fileImg2)
+                ]);
+
+                // Susun Object Data
+                const newProduct = {
+                    id: Date.now(), // Generate unique ID
+                    title: title,
+                    category: category,
+                    description: desc,
+                    img1: webpImg1, // Ini sudah Base64 berformat .webp dengan resolusi optimal
+                    img2: webpImg2  // Ini sudah Base64 berformat .webp dengan resolusi optimal
+                };
+
+                // Ambil DB Lama, Tambah Baru, Save ke localStorage
+                let products = JSON.parse(localStorage.getItem('djavu_dynamic_products')) || [];
+                products.push(newProduct);
+                localStorage.setItem('djavu_dynamic_products', JSON.stringify(products));
+
+                // Reset Form UI
+                form.reset();
+                document.getElementById('msgImg1').textContent = "Pilih atau Tarik File Gambar Kesini";
+                document.getElementById('msgImg1').style.color = "";
+                document.getElementById('msgImg2').textContent = "Pilih atau Tarik File Gambar Kesini";
+                document.getElementById('msgImg2').style.color = "";
+                
+                // Refresh Tabel
+                loadTableData();
+                alert('Berhasil! Produk telah dikompresi ke .webp dan masuk ke halaman utama.');
+
+            } catch (error) {
+                console.error("Gagal memproses gambar: ", error);
+                alert("Terjadi kesalahan saat mengompresi gambar. Pastikan format gambar valid.");
+            } finally {
+                // Kembalikan UX
+                submitBtn.disabled = false;
+                loaderStatus.style.display = 'none';
+            }
+        });
+
+        // Inisiasi awal
+        loadTableData();
+    </script>
+</body>
+</html>
