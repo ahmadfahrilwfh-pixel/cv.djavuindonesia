@@ -1046,7 +1046,7 @@
         </div>
     </div>
 
-    <script>
+  <script>
         // ==================================================
         // --- ENGINE 1: CINEMATIC LOGO LOADER OPTIMIZED ---
         // ==================================================
@@ -1313,11 +1313,14 @@
         // =====================================================================
         const SUPABASE_URL = 'https://poleyjhuzarxihuglbhn.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvbGV5amh1emFyeGlodWdsYmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTg4MzMsImV4cCI6MjA5NjY3NDgzM30.0KeN0dPvTskEO637E9835SmMQU0nn-dZ_0oL0ET8eU8';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Diubah dari 'supabase' menjadi 'db' untuk menghentikan error duplikasi konstan global library
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function loadDynamicProducts() {
             try {
-                const { data: dynamicProducts, error } = await supabase
+                // Fetch data dari Supabase menggunakan instance gateway 'db'
+                const { data: dynamicProducts, error } = await db
                     .from('djavu_dynamic_products')
                     .select('*')
                     .order('created_at', { ascending: true });
