@@ -66,23 +66,24 @@
             --primary-color: #d4af37; 
             --primary-glow: rgba(212, 175, 55, 0.6);
             --bg-color: #0a0a0f;
-            --glass-bg: rgba(15, 15, 20, 0.65);
-            --glass-border: rgba(212, 175, 55, 0.3);
+            --glass-bg: rgba(15, 15, 20, 0.75);
+            --glass-border: rgba(212, 175, 55, 0.25);
             --text-main: #f0f0f0;
             --text-muted: #b0b0b0;
-            --card-bg: rgba(20, 20, 25, 0.8);
+            --card-bg: rgba(20, 20, 25, 0.85);
+            --accent-glow: drop-shadow(0 0 8px var(--primary-color));
         }
 
         body.light-mode {
             --bg-color: #f4f6f9;
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(212, 175, 55, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(212, 175, 55, 0.4);
             --text-main: #1a1a24;
             --text-muted: #4a4a5a;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.92);
         }
 
-        * { 
+        *, *::before, *::after { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
@@ -95,6 +96,27 @@
             color: var(--text-main);
             overflow-x: hidden;
             transition: background-color 0.5s, color 0.5s;
+        }
+
+        /* --- ADVANCED SCROLL ANIMATION INFRASTRUCTURE --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform, opacity;
+        }
+
+        .animate-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MICRO-INTERACTION SCALE FOR PRESS/CLICK */
+        .interactive-asset {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+        .interactive-asset:active {
+            transform: scale(0.95) !important;
         }
 
         #loader {
@@ -268,16 +290,28 @@
         .nav-links li a:hover { color: var(--primary-color); }
 
         .controls { display: flex; align-items: center; gap: 20px; }
+        
+        /* FUTURISTIC SUN MOON TOGGLE ICON */
         .theme-btn, .menu-toggle {
             background: transparent; 
             border: none; 
             color: var(--text-main);
-            font-size: 18px; 
+            font-size: 19px; 
             cursor: pointer; 
-            transition: 0.3s;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
         }
-        .theme-btn:hover { color: var(--primary-color); transform: rotate(15deg); }
-        .menu-toggle { display: none; }
+        .theme-btn:hover { 
+            color: var(--primary-color); 
+            transform: rotate(180deg);
+            filter: var(--accent-glow);
+        }
+        .menu-toggle { display: none; position: relative; z-index: 1005; }
 
         .section-title { 
             font-family: 'Rajdhani', sans-serif; 
@@ -287,6 +321,7 @@
             margin-bottom: 30px; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
         }
         section { 
             min-height: auto; 
@@ -366,6 +401,28 @@
             box-shadow: 0 0 30px var(--primary-glow); 
         }
 
+        /* --- PERSUASIVE MARKETING & VALUE SECTION --- */
+        .marketing-banner {
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(214, 175, 55, 0.1) 0%, rgba(10, 10, 15, 0.6) 100%);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-color);
+            backdrop-filter: blur(10px);
+        }
+        .marketing-banner h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .marketing-banner p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
         .about-grid {
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -403,6 +460,63 @@
             background-size: contain; 
             background-repeat: no-repeat;
             background-position: center; 
+        }
+
+        /* --- DYNAMIC EDUCATIONAL ORDER FLOW SECTION --- */
+        .order-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .flow-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .flow-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
+        }
+        .flow-step-num {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: #0a0a0f;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        .flow-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+        .flow-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 19px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .flow-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .catalog-container { 
@@ -580,13 +694,65 @@
 
         .map-container { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 20px rgba(0,0,0,0.3); }
 
-        footer { background: var(--card-bg); border-top: 1px solid var(--glass-border); padding: 50px 10% 20px; text-align: center; }
-        .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 15px; }
-        .social-links a { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; background: var(--glass-bg); color: var(--text-main); font-size: 18px; text-decoration: none; border: 1px solid var(--glass-border); transition: 0.4s; }
-        .social-links a:hover { background: var(--primary-color); color: #fff; box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-5px); }
-        .footer-bottom { margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 8px; }
-        .copyright { color: var(--text-muted); font-size: 13px; }
-        .developer-tag { color: var(--primary-color); font-weight: 600; font-size: 13px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
+        /* --- CLEANED AND FIXED CENTERED FOOTER --- */
+        footer { 
+            background: var(--card-bg); 
+            border-top: 1px solid var(--glass-border); 
+            padding: 50px 10% 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .social-links { 
+            margin: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+        }
+        .social-links a { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            background: var(--glass-bg); 
+            color: var(--text-main); 
+            font-size: 18px; 
+            text-decoration: none; 
+            border: 1px solid var(--glass-border); 
+            transition: 0.4s; 
+        }
+        .social-links a:hover { 
+            background: var(--primary-color); 
+            color: #fff; 
+            box-shadow: 0 0 20px var(--primary-glow); 
+            transform: translateY(-5px); 
+        }
+        .footer-bottom { 
+            margin-top: 30px; 
+            padding-top: 15px; 
+            border-top: 1px solid var(--glass-border); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            gap: 8px; 
+            width: 100%;
+        }
+        .copyright { color: var(--text-muted); font-size: 13px; text-align: center; }
+        .developer-tag { color: var(--primary-color); font-weight: 600; font-size: 13px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; text-align: center; }
 
         .modal { 
             visibility: hidden; opacity: 0; position: fixed; z-index: 2000; left: 0; top: 0; width: 100vw; height: 100vh; 
@@ -604,10 +770,12 @@
         .wa-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; padding: 12px 25px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
         .wa-btn:hover { background: #1ebd5a; box-shadow: 0 0 20px rgba(37,211,102,0.4); transform: translateY(-3px); color: white;}
 
+        /* --- RESPONSIVE WORK & FIXED VERTICAL BURGER SIDE-DRAWER --- */
         @media (max-width: 1024px) { 
             section { padding: 80px 5% 40px; } 
             h1 { font-size: 42px; } 
             .about-grid { gap: 25px; padding: 30px; } 
+            .order-flow-grid { grid-template-columns: repeat(3, 1fr); }
         }
         
         @media (max-width: 768px) {
@@ -616,44 +784,65 @@
             h1 { font-size: 34px; } 
             .section-title { font-size: 28px; margin-bottom: 25px; } 
             .menu-toggle { display: block; }
+            
+            /* BUGER MENU AT REQ: HALF VERTICAL SCREEN DRAWER ONLY */
             .nav-links { 
-                position: absolute; top: 100%; left: 0; width: 100%; background: var(--card-bg); 
-                flex-direction: column; gap: 0; text-align: center; max-height: 0; overflow: hidden; 
-                transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+                position: fixed; 
+                top: 0; 
+                right: -100%; 
+                width: 50vw; /* Takes precisely half the horizontal screen viewport */
+                height: 100vh; /* Full vertical line */
+                background: var(--card-bg); 
+                flex-direction: column; 
+                justify-content: center;
+                align-items: center;
+                gap: 5px; 
+                text-align: center; 
+                transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                backdrop-filter: blur(25px); 
+                -webkit-backdrop-filter: blur(25px); 
+                border-left: 1px solid var(--glass-border);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                padding: 40px 0;
             }
-            .nav-links.active { max-height: 350px; border-bottom: 1px solid var(--glass-border); }
-            .nav-links li { padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+            .nav-links.active { right: 0; }
+            .nav-links li { width: 100%; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.05); }
             .about-grid { grid-template-columns: 1fr; padding: 25px; gap: 25px; } 
             .about-image { min-height: 340px; height: auto; } 
+            .order-flow-grid { grid-template-columns: 1fr; gap: 30px; }
             .map-container { height: 300px; }
+            footer { padding: 40px 20px 20px; align-items: center; text-align: center; }
+            .footer-content { align-items: center; text-align: center; }
         }
         
         @media (max-width: 480px) {
             section { padding: 60px 15px 30px; } 
             #home { padding-top: 90px; text-align: center; align-items: center; }
-            h1 { font-size: 28px; text-align: center; width: 100%; margin-bottom: 12px; } 
-            p.subtitle { font-size: 14px; text-align: center; margin-bottom: 20px; }
+            h1 { font-size: 26px; text-align: center; width: 100%; margin-bottom: 12px; } 
+            p.subtitle { font-size: 13px; text-align: center; margin-bottom: 20px; }
             .experience-badge { font-size: 11px; padding: 6px 12px; text-align: center; margin-bottom: 15px; } 
             .btn { width: 100%; text-align: center; padding: 12px 15px; font-size: 13px; } 
             .section-title { font-size: 24px; margin-bottom: 20px; }
             .about-grid { padding: 20px 15px; border-radius: 10px; } 
-            .about-text h3 { font-size: 20px; text-align: center; } 
+            .about-text h3 { font-size: 19px; text-align: center; } 
             .about-text p { font-size: 13px; line-height: 1.6; text-align: justify; } 
             .highlight-text { font-size: 14px; padding-left: 10px; margin: 12px 0; text-align: left; }
             .catalog-desc { font-size: 13px; text-align: justify; margin-bottom: 20px; } 
             .catalog-container { gap: 25px; } 
             .catalog-item { flex: 0 0 240px; height: 250px; } 
             .catalog-scroll-row { gap: 12px; padding-bottom: 10px; } 
-            .item-info h3 { font-size: 18px; } 
+            .item-info h3 { font-size: 17px; } 
             .item-info p { font-size: 11px; }
             .catalog-images .img-real { width: 65px; height: 65px; bottom: 10px; right: 10px; border-radius: 6px; } 
             .item-info { bottom: 10px; left: 10px; max-width: calc(100% - 90px); }
             .fabric-info-section { padding: 20px 15px; } 
-            .fabric-header h3 { font-size: 20px; } 
+            .fabric-header h3 { font-size: 18px; } 
             .fabric-description { font-size: 13px; margin-bottom: 15px; text-align: justify; } 
-            .fabric-section-title { font-size: 16px; margin-top: 15px; margin-bottom: 10px; }
+            .fabric-section-title { font-size: 15px; margin-top: 15px; margin-bottom: 10px; }
             .map-container { height: 250px; border-radius: 10px; } 
-            footer { padding: 30px 15px 15px; }
+            footer { padding: 35px 15px 15px; align-items: center; text-align: center; }
+            .footer-content { align-items: center; text-align: center; }
+            .footer-bottom { align-items: center; text-align: center; }
             .modal-content { padding: 15px; border-radius: 12px; } 
             .modal-images { gap: 8px; margin: 10px 0 15px; } 
             .modal-images img { height: 200px; } 
@@ -662,6 +851,7 @@
             .welcome-text { font-size: 14px; letter-spacing: 4px; } 
             .developed-text { font-size: 11px; letter-spacing: 2px; }
             .about-image { min-height: 290px; height: auto; }
+            .nav-links { width: 65vw; } /* Adjusted safe fallback width on extra small phones */
         }
     </style>
 </head>
@@ -681,17 +871,18 @@
         <div class="logo">CV. <span>DJAVU INDONESIA</span></div>
         <div class="nav-menu">
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#about">Profil Konveksi</a></li>
-                <li><a href="#catalog">Katalog Produk</a></li>
-                <li><a href="#location">Lokasi Kami</a></li>
-                <li><a href="#contact">Hubungi Kami</a></li>
+                <li><a href="#home" class="interactive-asset">Home</a></li>
+                <li><a href="#about" class="interactive-asset">About</a></li>
+                <li><a href="#order-flow" class="interactive-asset">Order Flow</a></li>
+                <li><a href="#catalog" class="interactive-asset">Catalog</a></li>
+                <li><a href="#location" class="interactive-asset">Location</a></li>
+                <li><a href="#contact" class="interactive-asset">Contact</a></li>
             </ul>
             <div class="controls">
-                <button class="theme-btn" id="themeToggle" title="Ganti Mode Terang/Gelap">
+                <button class="theme-btn interactive-asset" id="themeToggle" title="Ganti Mode Terang/Gelap">
                     <i class="fas fa-sun"></i>
                 </button>
-                <button class="menu-toggle" id="menuToggle">
+                <button class="menu-toggle interactive-asset" id="menuToggle">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -704,10 +895,19 @@
         </div>
         <h1>Konveksi Profesional di Klaten<br><span>Solusi Baju Custom & Seragam Berkualitas</span></h1>
         <p class="subtitle">CV. Djavu Indonesia merupakan pilihan tepat bagi Anda yang mencari tempat buat kaos murah di wilayah Klaten. Sebagai produsen garmen dan konveksi yang profesional, kami memadukan material premium, teknologi sablon yang presisi, dan tenaga penjahit ahli untuk menciptakan identitas terbaik bagi instansi, komunitas, maupun bisnis Anda.</p>
-        <a href="#catalog" class="btn">Lihat Katalog Kami</a>
+        
+        <div style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+            <a href="#catalog" class="btn interactive-asset">Lihat Katalog Kami</a>
+            <a href="#order-flow" class="btn interactive-asset" style="background: rgba(214,175,55,0.05);">Alur Pemesanan</a>
+        </div>
+
+        <div class="marketing-banner animate-on-scroll">
+            <h4>Komitmen Utama Mitra Produksi Anda</h4>
+            <p>Kami hadir dengan komitmen tinggi untuk <strong>membantu UMKM tanpa menurunkan kualitas</strong> produk. CV. Djavu Indonesia memberikan <strong>jaminan harga bersahabat di semua kalangan</strong> masyarakat. Berbekal pengalaman garmen profesional, kami selalu mendengarkan kebutuhan Anda dan <strong>siap bertanggung jawab penuh jika ada komplain</strong> demi menjaga kepuasan kerja sama jangka panjang.</p>
+        </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="animate-on-scroll">
         <h2 class="section-title">Tentang Konveksi Kami</h2>
         <div class="about-grid">
             <div class="about-text">
@@ -720,13 +920,39 @@
         </div>
     </section>
 
-    <section id="catalog">
+    <section id="order-flow" class="animate-on-scroll">
+        <h2 class="section-title">Alur Pemesanan Mudah</h2>
+        <p class="catalog-desc">Ikuti 3 langkah praktis berikut untuk merealisasikan pembuatan apparel kustom dan seragam instansi impian Anda di CV. Djavu Indonesia.</p>
+        
+        <div class="order-flow-grid">
+            <div class="flow-card animate-on-scroll">
+                <div class="flow-step-num">1</div>
+                <i class="fas fa-globe flow-icon"></i>
+                <h3>Akses Website</h3>
+                <p>Buka dan jelajahi situs resmi kami di alamat <span style="color: var(--primary-color); font-weight:600;">djavuindonesia.com</span> melalui perangkat HP, tablet, ataupun PC Anda.</p>
+            </div>
+            <div class="flow-card animate-on-scroll">
+                <div class="flow-step-num">2</div>
+                <i class="fas fa-images flow-icon"></i>
+                <h3>Lihat Katalog</h3>
+                <p>Pilih kategori desain produk apparel, jenis bahan kain, atau portofolio seragam garmen yang tersedia pada seksi katalog kami.</p>
+            </div>
+            <div class="flow-card animate-on-scroll">
+                <div class="flow-step-num">3</div>
+                <i class="fas fa-paper-plane flow-icon"></i>
+                <h3>Hubungi Admin</h3>
+                <p>Klik icon WhatsApp untuk terhubung langsung dengan template pesanan katalog, atau kirim email penawaran ke <span style="color: var(--primary-color); font-weight:600;">info@djavuindonesia.com</span>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="animate-on-scroll">
         <h2 class="section-title">Katalog Produk & Seragam</h2>
         <p class="catalog-desc">Jelajahi portofolio produk unggulan dari bengkel konveksi kami. Seluruh produk siap disesuaikan secara penuh dengan identitas visual dan kebutuhan branding untuk komunitas, institusi pendidikan, maupun perusahaan Anda.</p>
         
         <div class="catalog-container" id="dynamicCatalogContainer"></div>
 
-        <div class="fabric-info-section">
+        <div class="fabric-info-section animate-on-scroll">
             <div class="fabric-header">
                 <i class="fas fa-cube" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Pilihan Kaos Polo: Cotton CVC Pique Hexagon</h3>
@@ -734,28 +960,28 @@
             <p class="fabric-description">Pilihan material yang tepat bagi Anda yang ingin membuat kaos polo dengan budget bersahabat di Klaten. Menggunakan campuran 60% katun dan 40% poliester, kain ini menampilkan tekstur rajut segi enam yang khas. Karakteristiknya sangat awet, tidak mudah kusut, dan dijahit dengan tingkat presisi tinggi oleh tim kami.</p>
             <div class="fabric-section-title"><i class="fas fa-star" style="color: var(--primary-color);"></i> Keunggulan Memilih Kami</div>
             <div class="fabric-scroll-container">
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-tshirt fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Tampilan Selalu Rapi</h4>
                     <p class="fabric-box-desc">Tim kami memastikan struktur rajutan kerah tampil tegak dan rapi untuk kebutuhan seragam resmi.</p>
                 </div>
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-hand-holding-usd fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Investasi Terjangkau</h4>
                     <p class="fabric-box-desc">Memberikan solusi pembuatan seragam hemat tanpa mengorbankan kualitas material pakaian Anda.</p>
                 </div>
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-cubes fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Corak Hexagon Eksklusif</h4>
                     <p class="fabric-box-desc">Pola kain menyerupai sarang lebah yang memberikan sentuhan profesional dan elegan.</p>
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="warna-kain-cvc.html" class="color-selection-btn"><i class="fas fa-palette"></i> Lihat Pilihan Warna Kain Polo</a>
+                <a href="warna-kain-cvc.html" class="color-selection-btn interactive-asset"><i class="fas fa-palette"></i> Lihat Pilihan Warna Kain Polo</a>
             </div>
         </div>
 
-        <div class="fabric-info-section">
+        <div class="fabric-info-section animate-on-scroll">
             <div class="fabric-header">
                 <i class="fas fa-gem" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Kaos Polo Premium: Cotton Combed Pique Diamond</h3>
@@ -763,67 +989,67 @@
             <p class="fabric-description">Lini material kelas atas dengan komposisi katun murni 100% yang disediakan oleh konveksi profesional kami. Menghadirkan pola rajutan berlian yang mewah serta pori sirkulasi udara yang sejuk. Sangat nyaman, tidak menyusut setelah dicuci, dan merupakan kanvas yang sempurna untuk menonjolkan bordir logo perusahaan Anda.</p>
             <div class="fabric-section-title"><i class="fas fa-star" style="color: var(--primary-color);"></i> Standar Garmen Eksklusif</div>
             <div class="fabric-scroll-container">
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-award fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Material Kualitas Distro</h4>
                     <p class="fabric-box-desc">Katun premium yang sangat direkomendasikan untuk pembuatan seragam berkelas di Klaten.</p>
                 </div>
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-compress-alt fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Daya Tahan Tinggi</h4>
                     <p class="fabric-box-desc">Serat telah melalui proses stabilisasi agar ukuran pakaian tidak berubah meskipun rutin digunakan.</p>
                 </div>
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-wind fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Sirkulasi Udara Optimal</h4>
                     <p class="fabric-box-desc">Kemampuan menyerap keringat yang sangat baik, mendukung kenyamanan beraktivitas seharian penuh.</p>
                 </div>
-                <div class="fabric-box-item">
+                <div class="fabric-box-item interactive-asset">
                     <i class="fas fa-vector-square fabric-box-icon"></i>
                     <h4 class="fabric-box-title">Pola Berlian Mewah</h4>
-                    <p class="fabric-box-desc">Rajutan bermotif *diamond* yang secara visual mendongkrak citra premium instansi Anda.</p>
+                    <p class="fabric-box-desc">Rajutan bermotif diamond yang secara visual mendongkrak citra premium instansi Anda.</p>
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="warna-kain.html" class="color-selection-btn"><i class="fas fa-palette"></i> Cek Katalog Warna Pique Diamond</a>
+                <a href="warna-kain.html" class="color-selection-btn interactive-asset"><i class="fas fa-palette"></i> Cek Katalog Warna Pique Diamond</a>
             </div>
         </div>
 
-        <div class="fabric-info-section">
+        <div class="fabric-info-section animate-on-scroll">
             <div class="fabric-header">
                 <i class="fas fa-tshirt" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Bahan Kaos Sablon: Cotton Combed Premium</h3>
             </div>
-            <p class="fabric-description">Material favorit bagi pelanggan yang mencari kualitas distro saat pesen kaos di daerah Klaten. Serat kapasnya melalui proses *combing* khusus untuk menghilangkan bulu halus, sehingga menghasilkan tekstur kain yang super lembut. Daya serap keringatnya sangat baik dan cocok diaplikasikan dengan teknik sablon *discharge*, plastisol, maupun cetak DTF.</p>
+            <p class="fabric-description">Material favorit bagi pelanggan yang mencari kualitas distro saat pesen kaos di daerah Klaten. Serat kapasnya melalui proses combing khusus untuk menghilangkan bulu halus, sehingga menghasilkan tekstur kain yang super lembut. Daya serap keringatnya sangat baik dan cocok diaplikasikan dengan teknik sablon discharge, plastisol, maupun cetak DTF.</p>
             <div style="text-align: center;">
-                <a href="warna-cottoncombed.html" class="color-selection-btn"><i class="fas fa-palette"></i> Simulasi Warna Kaos Combed</a>
+                <a href="warna-cottoncombed.html" class="color-selection-btn interactive-asset"><i class="fas fa-palette"></i> Simulasi Warna Kaos Combed</a>
             </div>
         </div>
 
-        <div class="fabric-info-section">
+        <div class="fabric-info-section animate-on-scroll">
             <div class="fabric-header">
                 <i class="fas fa-user-shield" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Kemeja PDH Eksekutif: Bahan Nagata Drill</h3>
             </div>
-            <p class="fabric-description">Pilihan kain *drill* unggulan dari workshop konveksi kami untuk pembuatan kemeja kerja instansi dan pakaian dinas harian (PDH). Mengandung komposisi serat katun yang dominan, sehingga terasa sangat adem ketika dikenakan di iklim tropis. Rajutan benang miringnya tebal dan tidak menerawang, memancarkan kesan yang gagah serta berwibawa.</p>
+            <p class="fabric-description">Pilihan kain drill unggulan dari workshop konveksi kami untuk pembuatan kemeja kerja instansi dan pakaian dinas harian (PDH). Mengandung komposisi serat katun yang dominan, sehingga terasa sangat adem ketika dikenakan di iklim tropis. Rajutan benang miringnya tebal dan tidak menerawang, memancarkan kesan yang gagah serta berwibawa.</p>
             <div style="text-align: center;">
-                <a href="warna-kain-nagatadrill.html" class="color-selection-btn"><i class="fas fa-palette"></i> Pilihan Warna Nagata Drill</a>
+                <a href="warna-kain-nagatadrill.html" class="color-selection-btn interactive-asset"><i class="fas fa-palette"></i> Pilihan Warna Nagata Drill</a>
             </div>
         </div>
 
-        <div class="fabric-info-section">
+        <div class="fabric-info-section animate-on-scroll">
             <div class="fabric-header">
                 <i class="fas fa-briefcase" style="font-size: 30px; color: var(--primary-color);"></i>
                 <h3>Kemeja PDL Lapangan: Bahan American Drill</h3>
             </div>
-            <p class="fabric-description">Solusi andalan dan efisien untuk kebutuhan seragam kerja lapangan Anda. Bahan American Drill memadukan tingkat ketahanan gesekan fisik yang sangat luar biasa dengan harga yang ekonomis. Ini adalah material yang wajib dipertimbangkan saat Anda merancang wearpack, rompi lapangan, celana kargo, dan kemeja kegiatan *outdoor*.</p>
+            <p class="fabric-description">Solusi andalan dan efisien untuk kebutuhan seragam kerja lapangan Anda. Bahan American Drill memadukan tingkat ketahanan gesekan fisik yang sangat luar biasa dengan harga yang ekonomis. Ini adalah material yang wajib dipertimbangkan saat Anda merancang wearpack, rompi lapangan, celana kargo, dan kemeja kegiatan outdoor.</p>
             <div style="text-align: center;">
-                <a href="warna-kain-americandrill.html" class="color-selection-btn"><i class="fas fa-palette"></i> Katalog Warna American Drill</a>
+                <a href="warna-kain-americandrill.html" class="color-selection-btn interactive-asset"><i class="fas fa-palette"></i> Katalog Warna American Drill</a>
             </div>
         </div>
     </section>
 
-    <section id="location">
+    <section id="location" class="animate-on-scroll">
         <h2 class="section-title">Kunjungi Workshop Kami</h2>
         <div class="map-container">
             <iframe src="https://maps.google.com/maps?q=Jl.%20Jend.%20Sudirman,%20Kadilayar,%20Kajoran,%20Klaten&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Konveksi Profesional di Klaten - CV Djavu Indonesia"></iframe>
@@ -831,22 +1057,24 @@
     </section>
 
     <footer id="contact">
-        <h2 class="section-title" style="margin-bottom: 15px;">Hubungi Layanan Kami</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Diskusikan kebutuhan seragam dan pembuatan kaos Anda secara langsung dengan tim konveksi profesional kami. Kami melayani konsultasi desain tanpa biaya tambahan. Hubungi email resmi kami di: info@djavuindonesia.com</p>
-        
-        <div class="social-links">
-            <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp Konsultasi Seragam Klaten"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/djavuindonesia.official?igsh=MTlwaHVkOHM5NnI3MQ==" target="_blank" title="Instagram CV Djavu Indonesia"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@djavuindonesia.off?_r=1&_t=ZS-973VonbuODV" target="_blank" title="TikTok Konveksi Garmen"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61590541237344" target="_blank" title="Halaman Facebook Konveksi"><i class="fab fa-facebook-f"></i></a>
-            <a href="mailto:info@djavuindonesia.com" target="_blank" title="Kirim Permintaan Penawaran Harga"><i class="far fa-envelope"></i></a>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="copyright">© 2026 CV. Djavu Indonesia | Vendor Konveksi & Sablon Klaten. Hak Cipta Dilindungi Undang-Undang.</div>
-            <div class="developer-tag">
-                developed by Ahmad Fahril 
-                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release SEO V3 Cloudflare Edge Hybrid">v1.26.06.11.CF</span>
+        <div class="footer-content animate-on-scroll">
+            <h2 class="section-title" style="margin-bottom: 15px;">Hubungi Layanan Kami</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px; max-width: 700px;">Diskusikan kebutuhan seragam dan pembuatan kaos Anda secara langsung dengan tim konveksi profesional kami. Kami melayani konsultasi desain tanpa biaya tambahan. Hubungi email resmi kami di: info@djavuindonesia.com</p>
+            
+            <div class="social-links">
+                <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp Konsultasi Seragam Klaten" class="interactive-asset"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/djavuindonesia.official?igsh=MTlwaHVkOHM5NnI3MQ==" target="_blank" title="Instagram CV Djavu Indonesia" class="interactive-asset"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@djavuindonesia.off?_r=1&_t=ZS-973VonbuODV" target="_blank" title="TikTok Konveksi Garmen" class="interactive-asset"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61590541237344" target="_blank" title="Halaman Facebook Konveksi" class="interactive-asset"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:info@djavuindonesia.com" target="_blank" title="Kirim Permintaan Penawaran Harga" class="interactive-asset"><i class="far fa-envelope"></i></a>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">© 2026 CV. Djavu Indonesia | Vendor Konveksi & Sablon Klaten. Hak Cipta Dilindungi Undang-Undang.</div>
+                <div class="developer-tag">
+                    developed by Ahmad Fahril 
+                    <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release SEO V3 Cloudflare Edge Hybrid">v1.26.06.11.CF</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -865,7 +1093,7 @@
                     <img id="modalImg2" src="" alt="Hasil Produksi Asli Garmen">
                 </div>
             </div>
-            <a id="modalWaBtn" href="#" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> Mintalah Penawaran Harga Disini</a>
+            <a id="modalWaBtn" href="#" target="_blank" class="wa-btn interactive-asset"><i class="fab fa-whatsapp"></i> Mintalah Penawaran Harga Disini</a>
         </div>
     </div>
 
@@ -1030,12 +1258,23 @@
             }
         });
 
-        // ==================================================
-        // --- ENGINE 2: SITE INTERFACES & BACKDROP TRACK ---
-        // ==================================================
+        // =========================================================================
+        // --- ENGINE 2: ADVANCED SCROLL/CLICK ANIMATIONS & INTERACTIVE BACKDROP ---
+        // =========================================================================
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+        
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => { navLinks.classList.remove('active'); });
         });
@@ -1047,56 +1286,92 @@
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             if (document.body.classList.contains('light-mode')) {
-                themeIcon.classList.remove('fa-sun'); themeIcon.classList.add('fa-moon');
+                themeIcon.className = 'fas fa-moon';
                 canvasFadeColor = 'rgba(244, 246, 249, 0.2)'; 
             } else {
-                themeIcon.classList.remove('fa-moon'); themeIcon.classList.add('fa-sun');
+                themeIcon.className = 'fas fa-sun';
                 canvasFadeColor = 'rgba(10, 10, 15, 0.2)';
             }
         });
 
-        const modal = document.getElementById('productModal');
-        const closeModalBtn = document.querySelector('.close-modal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalImg1 = document.getElementById('modalImg1');
-        const modalImg2 = document.getElementById('modalImg2');
-        const modalWaBtn = document.getElementById('modalWaBtn');
+        // RE-TRIGGER SCROLL ANIMATION (UP AND DOWN) VIA MODERN INTERSECTION OBSERVER
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    // Removes class when out of bounds so it always re-triggers smoothly when scrolling back
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: "0px 0px -20px 0px" });
 
-        closeModalBtn.addEventListener('click', () => { modal.classList.remove('show'); });
-        window.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('show'); } });
+        function updateScrollTriggers() {
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                scrollObserver.observe(element);
+            });
+        }
 
+        // TOUCH & CURSOR EVENT COHESION ON INTERACTIVE CHIP FIELD
         const canvas = document.getElementById('canvas-container');
         const ctx = canvas.getContext('2d');
         let width, height, particles;
+        let pointer = { x: -9999, y: -9999, radius: 100 };
 
         function initMainParticles() {
             width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
             particles = [];
-            const baseDivisor = width < 768 ? 50 : 35;
-            const particleCount = Math.min(Math.floor(width / baseDivisor), 45); 
+            const baseDivisor = width < 768 ? 45 : 30;
+            const particleCount = Math.min(Math.floor(width / baseDivisor), 55); 
             for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
         }
 
         class Particle {
             constructor() {
                 this.x = Math.random() * width; this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.7; this.vy = (Math.random() - 0.5) * 0.7;
-                this.baseRadius = Math.random() * 1.2 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.8; this.vy = (Math.random() - 0.5) * 0.8;
+                this.baseRadius = Math.random() * 1.5 + 0.6;
+                this.radius = this.baseRadius;
             }
             update() {
-                this.x += this.vx; this.y += this.vy;
+                // Interactive Touch/Mouse Repulsion Logic
+                let dx = this.x - pointer.x;
+                let dy = this.y - pointer.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < pointer.radius) {
+                    let force = (pointer.radius - dist) / pointer.radius;
+                    let angle = Math.atan2(dy, dx);
+                    this.x += Math.cos(angle) * force * 4;
+                    this.y += Math.sin(angle) * force * 4;
+                } else {
+                    this.x += this.vx; this.y += this.vy;
+                }
+
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
             }
             draw() {
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.baseRadius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(212, 175, 55, 0.75)'; ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = document.body.classList.contains('light-mode') ? 'rgba(214, 175, 55, 0.8)' : 'rgba(214, 175, 55, 0.7)'; 
+                ctx.fill();
             }
         }
 
+        function trackPointer(e) {
+            pointer.x = e.clientX || (e.touches && e.touches[0].clientX) || -9999;
+            pointer.y = e.clientY || (e.touches && e.touches[0].clientY) || -9999;
+        }
+        function resetPointer() { pointer.x = -9999; pointer.y = -9999; }
+
+        window.addEventListener('mousemove', trackPointer);
+        window.addEventListener('touchmove', trackPointer);
+        window.addEventListener('touchend', resetPointer);
+        window.addEventListener('mouseleave', resetPointer);
+
         function animateMainSite() {
             ctx.fillStyle = canvasFadeColor; ctx.fillRect(0, 0, width, height);
-            const connectionDistance = width < 480 ? 70 : 110;
+            const connectionDistance = width < 480 ? 75 : 120;
             const len = particles.length;
             
             for (let i = 0; i < len; i++) {
@@ -1105,7 +1380,7 @@
                     const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < connectionDistance) {
-                        ctx.beginPath(); ctx.strokeStyle = `rgba(212, 175, 55, ${1 - distance/connectionDistance})`;
+                        ctx.beginPath(); ctx.strokeStyle = `rgba(214, 175, 55, ${(1 - distance/connectionDistance) * 0.4})`;
                         ctx.lineWidth = 0.5; ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
                     }
                 }
@@ -1130,6 +1405,16 @@
             topi: "Topi Custom Distro"
         };
 
+        const modal = document.getElementById('productModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImg1 = document.getElementById('modalImg1');
+        const modalImg2 = document.getElementById('modalImg2');
+        const modalWaBtn = document.getElementById('modalWaBtn');
+
+        closeModalBtn.addEventListener('click', () => { modal.classList.remove('show'); });
+        window.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('show'); } });
+
         async function loadDynamicProducts() {
             try {
                 const response = await fetch(WORKER_API_URL);
@@ -1139,7 +1424,6 @@
                 const catalogContainer = document.getElementById('dynamicCatalogContainer');
                 
                 if (!catalogContainer) return;
-                
                 catalogContainer.innerHTML = '';
                 
                 if (dynamicProducts.length === 0) {
@@ -1152,12 +1436,12 @@
                     
                     if (!targetRow) {
                         const newHeader = document.createElement('h3');
-                        newHeader.className = 'catalog-category-title';
+                        newHeader.className = 'catalog-category-title animate-on-scroll';
                         newHeader.id = `title-${product.category}`;
                         newHeader.textContent = humanReadableCategories[product.category] || product.category.toUpperCase();
                         
                         targetRow = document.createElement('div');
-                        targetRow.className = 'catalog-scroll-row';
+                        targetRow.className = 'catalog-scroll-row animate-on-scroll';
                         targetRow.id = `row-${product.category}`;
                         
                         catalogContainer.appendChild(newHeader);
@@ -1166,27 +1450,28 @@
                     
                     if (targetRow) {
                         const itemDiv = document.createElement('div');
-                        itemDiv.className = 'catalog-item';
+                        itemDiv.className = 'catalog-item interactive-asset';
                         itemDiv.setAttribute('data-title', product.title);
                         itemDiv.setAttribute('data-img1', product.img1);
                         itemDiv.setAttribute('data-img2', product.img2);
                         
-                    itemDiv.innerHTML = `
-                        <div class="catalog-images">
-                            <img src="${product.img1}" alt="${product.title} - Layanan Konveksi di Klaten" class="img-model" loading="lazy">
-                            <img src="${product.img2}" alt="Portofolio Asli ${product.title} - Buat Seragam di Klaten" class="img-real" loading="lazy">
-                        </div>
-                        <div class="item-info">
-                            <h3>${product.title}</h3>
-                            <p>${product.description}</p>
-                        </div>
-                    `;
+                        itemDiv.innerHTML = `
+                            <div class="catalog-images">
+                                <img src="${product.img1}" alt="${product.title} - Layanan Konveksi di Klaten" class="img-model" loading="lazy">
+                                <img src="${product.img2}" alt="Portofolio Asli ${product.title} - Buat Seragam di Klaten" class="img-real" loading="lazy">
+                            </div>
+                            <div class="item-info">
+                                <h3>${product.title}</h3>
+                                <p>${product.description}</p>
+                            </div>
+                        `;
                         
                         itemDiv.addEventListener('click', () => {
                             modalTitle.textContent = product.title;
                             modalImg1.src = product.img1;
                             modalImg2.src = product.img2;
-                            const waText = encodeURIComponent(`Halo tim CV. Djavu Indonesia (Konveksi di Klaten), saya tertarik untuk membuat baju custom dengan detail contoh produk: ${product.title}. Mohon info pricelist-nya.`);
+                            // Predefined professional message template
+                            const waText = encodeURIComponent(`Halo CV. Djavu Indonesia, saya melihat katalog produk: ${product.title} di djavuindonesia.com. Saya ingin konsultasi pemesanan apparel kustom dengan jaminan harga bersahabat.`);
                             modalWaBtn.href = `https://wa.me/6281369602596?text=${waText}`;
                             modal.classList.add('show');
                         });
@@ -1194,11 +1479,18 @@
                         targetRow.appendChild(itemDiv);
                     }
                 });
+                
+                // Initialize modern continuous scroll entry engines
+                updateScrollTriggers();
+                
             } catch (error) {
                 console.error("Cloud Dynamic Engine Error:", error);
             }
         }
-        document.addEventListener('DOMContentLoaded', loadDynamicProducts);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDynamicProducts();
+            updateScrollTriggers();
+        });
     </script>
 </body>
 </html>
