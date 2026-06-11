@@ -295,21 +295,16 @@
             backdrop-filter: blur(15px);
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
     <div id="loginOverlay">
         <div class="login-box">
             <h2 style="color: var(--primary-color); font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; text-shadow: 0 0 10px var(--primary-glow);">GIS Secure Login</h2>
-            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 25px; letter-spacing: 1px;">CORE GATEWAY ENCRYPTION SYSTEM</p>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 25px; letter-spacing: 1px;">CORE CLOUDFLARE SECURITY GATEWAY</p>
             <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
                 <div class="form-group">
-                    <label>Terminal User Mail</label>
-                    <input type="email" id="adminEmail" placeholder="admin@djavuindonesia.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Terminal Password Key</label>
+                    <label>Terminal Password Key (ADMIN_TOKEN)</label>
                     <input type="password" id="adminPass" placeholder="••••••••" required>
                 </div>
                 <button onclick="loginAdmin()" style="margin-top: 10px;" class="btn"><i class="fas fa-shield-alt"></i> Grant Session Access</button>
@@ -319,14 +314,14 @@
 
     <div class="sidebar">
         <div class="brand">GIS Terminal<br><span style="font-size: 12px; color: #fff; letter-spacing: 4px;">Control Panel</span></div>
-        <a href="#" class="nav-item active"><i class="fas fa-box-open"></i> Input Produk Baru</a>
+        <a href="#" class="nav-item active" id="navInputLink" onclick="resetFormToNormal()"><i class="fas fa-box-open"></i> Input / Edit Produk</a>
         <a href="index.html" target="_blank" class="nav-item"><i class="fas fa-globe"></i> Lihat Website</a>
     </div>
 
     <div class="main-content">
         <div class="header-title">
             Database Produk Dinamis
-            <span id="dbStatusLabel" class="status-badge" style="background: rgba(212, 175, 55, 0.1); color: var(--primary-color); border-color: var(--primary-color);"><i class="fas fa-wifi"></i> DB: CLOUD_SUPABASE [CONNECTING]</span>
+            <span id="dbStatusLabel" class="status-badge" style="background: rgba(212, 175, 55, 0.1); color: var(--primary-color); border-color: var(--primary-color);"><i class="fas fa-wifi"></i> DB: CLOUDFLARE_D1 [DISCONNECTED]</span>
         </div>
 
         <div class="form-panel">
@@ -374,7 +369,7 @@
                     </div>
 
                     <div class="form-group full-width">
-                        <div id="loaderStatus" class="compression-loader"><i class="fas fa-spinner fa-spin"></i> Mengompresi & Convert gambar ke WEBP...</div>
+                        <div id="loaderStatus" class="compression-loader"><i class="fas fa-spinner fa-spin"></i> Memproses data ke jaringan Cloudflare Edge...</div>
                         <button type="submit" id="submitBtn" class="btn"><i class="fas fa-database"></i> Simpan & Publish Produk</button>
                     </div>
                 </div>
@@ -392,208 +387,249 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="dataTableBody">
-                </tbody>
+                <tbody id="dataTableBody"></tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // =================================================================
-        // CLOUD CORE SETUP: INHERITED SUPABASE CREDENTIALS CONFIGURATION
-        // =================================================================
-        const SUPABASE_URL = 'https://poleyjhuzarxihuglbhn.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvbGV5amh1emFyeGlodWdsYmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTg4MzMsImV4cCI6MjA5NjY3NDgzM30.0KeN0dPvTskEO637E9835SmMQU0nn-dZ_0oL0ET8eU8';
-        
-        // Diubah dari 'supabase' menjadi 'db' untuk mencegah re-declaration error dari library global CDN
-        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      // =================================================================
+// SYSTEM APPLICATION CORE: CLOUDFLARE EDGE CONFIGURATION (MULTIPART)
+// =================================================================
+const WORKER_API_URL = 'https://user.djavuindonesia.com/api/products';
 
-        const loginOverlay = document.getElementById('loginOverlay');
-        const dbStatusLabel = document.getElementById('dbStatusLabel');
+const loginOverlay = document.getElementById('loginOverlay');
+const dbStatusLabel = document.getElementById('dbStatusLabel');
+const form = document.getElementById('productForm');
+const submitBtn = document.getElementById('submitBtn');
+const loaderStatus = document.getElementById('loaderStatus');
+const tableBody = document.getElementById('dataTableBody');
 
-        // Mengunci halaman apabila session token JWT milik admin belum aktif/sah
-        async function checkSecureSession() {
-            const { data: { session } } = await db.auth.getSession();
-            if (session) {
-                loginOverlay.style.display = 'none';
-                dbStatusLabel.className = "status-badge";
-                dbStatusLabel.style.cssText = "background: rgba(46, 213, 115, 0.1); color: var(--success); border-color: var(--success);";
-                dbStatusLabel.innerHTML = '<i class="fas fa-satellite-dish"></i> DB: SUPABASE_CLOUD [SECURED]';
-                loadTableData();
-            }
-        }
-        checkSecureSession();
+let isEditMode = false;
+let currentEditId = null;
+let cacheLoadedProducts = []; 
 
-        // Autentikasi Handler Admin (Sekarang terekspos sempurna ke global window)
-        async function loginAdmin() {
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPass').value;
-            if(!email || !password) { alert("Sistem: Email dan sandi pengaman tidak boleh kosong!"); return; }
-            
-            const { data, error } = await db.auth.signInWithPassword({ email, password });
-            if (error) {
-                alert("Akses Ditolak System: Kredensial Enkripsi Salah! " + error.message);
-            } else {
-                loginOverlay.style.display = 'none';
-                window.location.reload();
-            }
-        }
+// Mengunci halaman apabila session token milik admin belum aktif
+function checkSecureSession() {
+    const token = sessionStorage.getItem('djavu_admin_token');
+    if (token) {
+        loginOverlay.style.display = 'none';
+        dbStatusLabel.className = "status-badge";
+        dbStatusLabel.style.cssText = "background: rgba(46, 213, 115, 0.1); color: var(--success); border-color: var(--success);";
+        dbStatusLabel.innerHTML = '<i class="fas fa-satellite-dish"></i> DB: CLOUDFLARE_D1 [SECURED]';
+        loadTableData();
+    }
+}
+document.addEventListener('DOMContentLoaded', checkSecureSession);
 
-        // =================================================================
-        // ENGINE: CLIENT-SIDE IMAGE COMPRESSION & WEBP CONVERTER
-        // =================================================================
-        function compressAndConvertToWebP(file, maxWidth = 800, quality = 0.8) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        
-                        let width = img.width;
-                        let height = img.height;
+function loginAdmin() {
+    const password = document.getElementById('adminPass').value;
+    if(!password) { alert("Sistem: Token pengaman tidak boleh kosong!"); return; }
+    sessionStorage.setItem('djavu_admin_token', password);
+    window.location.reload();
+}
 
-                        if (width > height && width > maxWidth) {
-                            height = Math.round(height * (maxWidth / width));
-                            width = maxWidth;
-                        } else if (height > maxWidth) {
-                            width = Math.round(width * (maxWidth / height));
-                            height = maxWidth;
-                        } else {
-                            width = img.width;
-                            height = img.height;
-                        }
+// Decorator Input File Listener
+document.getElementById('prodImg1').addEventListener('change', function(e) {
+    document.getElementById('msgImg1').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
+    document.getElementById('msgImg1').style.color = "#d4af37";
+});
+document.getElementById('prodImg2').addEventListener('change', function(e) {
+    document.getElementById('msgImg2').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
+    document.getElementById('msgImg2').style.color = "#d4af37";
+});
 
-                        canvas.width = width;
-                        canvas.height = height;
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        const webpDataUrl = canvas.toDataURL('image/webp', quality);
-                        resolve(webpDataUrl);
-                    };
-                    img.onerror = error => reject(error);
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        // =================================================================
-        // ENGINE: FORM HANDLING & CLOUD CLUSTER ENGINE (SUPABASE DB)
-        // =================================================================
-        const form = document.getElementById('productForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const loaderStatus = document.getElementById('loaderStatus');
-        const tableBody = document.getElementById('dataTableBody');
-
-        document.getElementById('prodImg1').addEventListener('change', function(e) {
-            document.getElementById('msgImg1').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
-            document.getElementById('msgImg1').style.color = "#d4af37";
-        });
-        document.getElementById('prodImg2').addEventListener('change', function(e) {
-            document.getElementById('msgImg2').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
-            document.getElementById('msgImg2').style.color = "#d4af37";
-        });
-
-        // Membaca Data langsung dari Cluster Cloud Supabase
-        async function loadTableData() {
-            const { data: products, error } = await db
-                .from('djavu_dynamic_products')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            if (error) {
-                console.error("Gagal sinkronisasi data cloud:", error);
-                return;
-            }
-
-            tableBody.innerHTML = '';
-            if(products.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #888;">Belum ada produk tambahan di database cloud.</td></tr>`;
-                return;
-            }
-
-            products.forEach((prod) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span style="background: rgba(212,175,55,0.1); color: var(--primary-color); padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase;">${prod.category}</span></td>
-                    <td><img src="${prod.img1}" alt="preview"></td>
-                    <td style="font-weight: 600;">${prod.title}</td>
-                    <td>
-                        <button class="btn-delete" onclick="deleteProduct(${prod.id})"><i class="fas fa-trash"></i> Hapus</button>
-                    </td>
-                `;
-                tableBody.appendChild(tr);
-            });
-        }
-
-        // Menghapus data produk dari tabel Supabase Cloud
-        window.deleteProduct = async function(id) {
-            if(confirm('Anda yakin ingin menghapus produk ini dari database cloud utama?')) {
-                const { error } = await db
-                    .from('djavu_dynamic_products')
-                    .delete()
-                    .eq('id', id);
-
-                if (error) {
-                    alert('Gagal mengeksekusi penghapusan: ' + error.message);
-                } else {
-                    loadTableData();
+// WEBP Compression Engine
+function compressAndConvertToWebP(file, maxWidth = 800, quality = 0.8) {
+    return new Promise((resolve, reject) => {
+        if (!file) { resolve(null); return; }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                let width = img.width, height = img.height;
+                if (width > height && width > maxWidth) {
+                    height = Math.round(height * (maxWidth / width)); width = maxWidth;
+                } else if (height > maxWidth) {
+                    width = Math.round(width * (maxWidth / height)); height = maxWidth;
                 }
-            }
+                canvas.width = width; canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/webp', quality));
+            };
         };
+    });
+}
 
-        // Mengirimkan data produk baru ke Supabase Cluster
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            submitBtn.disabled = true;
-            loaderStatus.style.display = 'block';
+// Helper untuk mengubah DataURL hasil canvas compress menjadi File Object biner asli (Blob)
+function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){ u8arr[n] = bstr.charCodeAt(n); }
+    return new Blob([u8arr], {type:mime});
+}
 
-            try {
-                const title = document.getElementById('prodTitle').value;
-                const category = document.getElementById('prodCategory').value;
-                const desc = document.getElementById('prodDesc').value;
-                
-                const fileImg1 = document.getElementById('prodImg1').files[0];
-                const fileImg2 = document.getElementById('prodImg2').files[0];
+// Sinkronisasi ambil data dari Cloudflare D1
+async function loadTableData() {
+    try {
+        const response = await fetch(WORKER_API_URL);
+        if(!response.ok) throw new Error("Koneksi gagal");
+        cacheLoadedProducts = await response.json();
 
-                const [webpImg1, webpImg2] = await Promise.all([
-                    compressAndConvertToWebP(fileImg1),
-                    compressAndConvertToWebP(fileImg2)
-                ]);
+        tableBody.innerHTML = '';
+        if(cacheLoadedProducts.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #888;">Belum ada katalog tersimpan di server cloud.</td></tr>`;
+            return;
+        }
 
-                // Query Insert data ke tabel Supabase RLS Protected
-                const { error } = await db
-                    .from('djavu_dynamic_products')
-                    .insert([{
-                        title: title,
-                        category: category,
-                        description: desc,
-                        img1: webpImg1,
-                        img2: webpImg2
-                    }]);
-
-                if (error) throw error;
-
-                form.reset();
-                document.getElementById('msgImg1').textContent = "Pilih atau Tarik File Gambar Kesini";
-                document.getElementById('msgImg1').style.color = "";
-                document.getElementById('msgImg2').textContent = "Pilih atau Tarik File Gambar Kesini";
-                document.getElementById('msgImg2').style.color = "";
-                
-                loadTableData();
-                alert('Berhasil! Data terkompresi .webp dan tersinkronisasi di cluster cloud.');
-
-            } catch (error) {
-                console.error("Gagal mengamankan komparasi data: ", error);
-                alert("Gagal mengunggah data: " + error.message);
-            } finally {
-                submitBtn.disabled = false;
-                loaderStatus.style.display = 'none';
-            }
+        cacheLoadedProducts.forEach((prod) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><span style="background: rgba(212,175,55,0.05); color: var(--primary-color); padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform:uppercase;">${prod.category}</span></td>
+                <td><img src="${prod.img1}" alt="preview"></td>
+                <td style="font-weight: 600;">${prod.title}</td>
+                <td>
+                    <button class="btn" style="padding: 5px 10px; font-size: 11px; display:inline-flex; background: rgba(212,175,55,0.1); color: var(--primary-color); border: 1px solid var(--primary-color); margin-right:5px;" onclick="initiateEditMode(${prod.id})"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete" onclick="deleteProduct(${prod.id})"><i class="fas fa-trash"></i> Hapus</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
         });
+    } catch(err) {
+        console.error("Sinkronisasi gagal:", err);
+    }
+}
+
+// Memasukkan data katalog terpilih ke dalam Form untuk siap diubah (PUT)
+window.initiateEditMode = function(id) {
+    const targetProduct = cacheLoadedProducts.find(p => p.id === id);
+    if(!targetProduct) return;
+
+    isEditMode = true;
+    currentEditId = id;
+
+    // Isi Form Nilai Lama
+    document.getElementById('prodTitle').value = targetProduct.title;
+    document.getElementById('prodCategory').value = targetProduct.category;
+    document.getElementById('prodDesc').value = targetProduct.description;
+
+    // Merubah info label input file
+    document.getElementById('msgImg1').textContent = "Gambar tersimpan aktif (Pilih file baru jika ingin ganti)";
+    document.getElementById('msgImg1').style.color = "#2ed573";
+    document.getElementById('msgImg2').textContent = "Gambar tersimpan aktif (Pilih file baru jika ingin ganti)";
+    document.getElementById('msgImg2').style.color = "#2ed573";
+
+    // Ubah mode visual tombol submit
+    submitBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Simpan Perubahan (Update)';
+    submitBtn.style.background = '#2ed573';
+    submitBtn.style.color = '#000';
+    
+    // Matikan required karena gambar bisa menggunakan data lama di database jika tidak diganti
+    document.getElementById('prodImg1').required = false;
+    document.getElementById('prodImg2').required = false;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Reset Form Kembali ke Mode Tambah Normal
+window.resetFormToNormal = function() {
+    form.reset();
+    isEditMode = false;
+    currentEditId = null;
+    submitBtn.innerHTML = '<i class="fas fa-database"></i> Simpan & Publish Produk';
+    submitBtn.style.background = 'var(--primary-color)';
+    submitBtn.style.color = '#000';
+    document.getElementById('prodImg1').required = true;
+    document.getElementById('prodImg2').required = true;
+    document.getElementById('msgImg1').textContent = "Pilih atau Tarik File Gambar Kesini";
+    document.getElementById('msgImg1').style.color = "";
+    document.getElementById('msgImg2').textContent = "Pilih atau Tarik File Gambar Kesini";
+    document.getElementById('msgImg2').style.color = "";
+};
+
+// POST atau PUT Submission Handler (Multipart FormData ke R2 & D1)
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    loaderStatus.style.display = 'block';
+
+    const token = sessionStorage.getItem('djavu_admin_token');
+
+    try {
+        const title = document.getElementById('prodTitle').value;
+        const category = document.getElementById('prodCategory').value;
+        const desc = document.getElementById('prodDesc').value;
+        
+        const fileImg1 = document.getElementById('prodImg1').files[0];
+        const fileImg2 = document.getElementById('prodImg2').files[0];
+
+        // Compress via Canvas tetap dijalankan agar ukuran resolusinya pas (lebar maksimal 800px)
+        const webpDataUrl1 = await compressAndConvertToWebP(fileImg1);
+        const webpDataUrl2 = await compressAndConvertToWebP(fileImg2);
+
+        // Bungkus data ke dalam FormData biner murni bawaan browser
+        let formDataToSend = new FormData();
+        formDataToSend.append("title", title);
+        formDataToSend.append("category", category);
+        formDataToSend.append("description", desc);
+
+        if (isEditMode) {
+            formDataToSend.append("id", currentEditId);
+        }
+
+        // Jika user memilih file baru, ubah blob canvas jadi file biner .webp asli untuk diunggah
+        if (webpDataUrl1) {
+            formDataToSend.append("img1", dataURLtoBlob(webpDataUrl1), "image1.webp");
+        }
+        if (webpDataUrl2) {
+            formDataToSend.append("img2", dataURLtoBlob(webpDataUrl2), "image2.webp");
+        }
+
+        let targetMethod = isEditMode ? 'PUT' : 'POST';
+
+        const response = await fetch(WORKER_API_URL, {
+            method: targetMethod,
+            headers: { 'X-Admin-Token': token }, // Tanpa Content-Type header manual! Biarkan browser yang mengisi boundary multipart otomatis.
+            body: formDataToSend
+        });
+
+        const result = await response.json();
+        if(!response.ok) throw new Error(result.error);
+
+        resetFormToNormal();
+        loadTableData();
+        alert(isEditMode ? 'Katalog sukses terupdate dengan asset gambar R2!' : 'Produk baru sukses disimpan secara biner!');
+
+    } catch (error) {
+        alert("Aksi Gagal: " + error.message);
+    } finally {
+        submitBtn.disabled = false;
+        loaderStatus.style.display = 'none';
+    }
+});
+
+// Action Delete Handler
+window.deleteProduct = async function(id) {
+    if(confirm('Anda yakin ingin menghapus produk ini secara permanen dari server cloud?')) {
+        const token = sessionStorage.getItem('djavu_admin_token');
+        try {
+            const response = await fetch(`${WORKER_API_URL}?id=${id}`, {
+                method: 'DELETE',
+                headers: { 'X-Admin-Token': token }
+            });
+            const resData = await response.json();
+            if (!response.ok) throw new Error(resData.error);
+            loadTableData();
+            alert('Produk sukses terhapus.');
+        } catch (error) {
+            alert('Aksi Gagal: ' + error.message);
+        }
+    }
+};
     </script>
 </body>
 </html>
