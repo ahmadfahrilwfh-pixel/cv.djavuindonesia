@@ -5,296 +5,406 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GIS Terminal Control | Djavu Admin</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        :root {
-            --primary-color: #d4af37; 
-            --primary-glow: rgba(212, 175, 55, 0.4);
-            --bg-color: #050508;
-            --panel-bg: rgba(15, 15, 20, 0.85);
-            --glass-border: rgba(212, 175, 55, 0.3);
-            --text-main: #f0f0f0;
-            --text-muted: #8a8a9a;
-            --danger: #ff4757;
-            --success: #2ed573;
-        }
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --primary-color: #00f3ff; /* Diubah ke Cyan Neon khas masa depan */
+        --primary-glow: rgba(0, 243, 255, 0.25);
+        --accent-color: #ff007f; /* Tambahan warna Magenta untuk kontras futuristik */
+        --accent-glow: rgba(255, 0, 127, 0.4);
+        --bg-color: #020205;
+        /* Glassmorphism setup (Lebih transparan & blur tebal) */
+        --panel-bg: rgba(10, 11, 18, 0.45);
+        --glass-border: rgba(0, 243, 255, 0.15);
+        --text-main: #e0f7fa;
+        --text-muted: #6c7a9c;
+        --danger: #ff0055;
+        --success: #00ffaa;
+    }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            background-image: 
-                linear-gradient(rgba(5, 5, 8, 0.9), rgba(5, 5, 8, 0.9)),
-                radial-gradient(circle at 50% 0%, var(--primary-glow) 0%, transparent 50%);
-        }
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+    }
 
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 260px;
-            background: var(--panel-bg);
-            border-right: 1px solid var(--glass-border);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(10px);
-        }
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+        /* Efek grid laser transparan di background */
+        background-image: 
+            linear-gradient(rgba(2, 2, 5, 0.85), rgba(2, 2, 5, 0.95)),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+            radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.15) 0%, transparent 60%);
+        background-size: 100% 100%, 40px 40px, 40px 40px, 100% 100%;
+    }
 
-        .brand {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary-glow);
-            margin-bottom: 40px;
-            text-align: center;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 15px;
-        }
+    /* --- SIDEBAR (Sleek Glass) --- */
+    .sidebar {
+        width: 260px;
+        background: rgba(8, 9, 15, 0.6);
+        border-right: 1px solid var(--glass-border);
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+    }
 
-        .nav-item {
-            padding: 12px 15px;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            transition: 0.3s;
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
+    .brand {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-shadow: 0 0 15px var(--primary-glow), 0 0 30px rgba(0, 243, 255, 0.2);
+        margin-bottom: 40px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        padding-bottom: 15px;
+        position: relative;
+    }
+    
+    /* Efek garis strip kecil di bawah brand */
+    .brand::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
 
-        .nav-item.active, .nav-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--primary-color);
-            border-left: 3px solid var(--primary-color);
-        }
+    .nav-item {
+        padding: 12px 15px;
+        color: var(--text-muted);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+    }
 
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            height: 100vh;
-        }
+    .nav-item.active, .nav-item:hover {
+        background: rgba(0, 243, 255, 0.05);
+        color: var(--primary-color);
+        border: 1px solid rgba(0, 243, 255, 0.2);
+        box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.1), 0 0 15px rgba(0, 243, 255, 0.05);
+        text-shadow: 0 0 8px var(--primary-glow);
+        transform: translateX(5px);
+    }
 
-        .header-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 28px;
-            color: var(--text-main);
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* --- MAIN CONTENT --- */
+    .main-content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+        height: 100vh;
+    }
 
-        .status-badge {
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            padding: 5px 12px;
-            background: rgba(46, 213, 115, 0.1);
-            color: var(--success);
-            border: 1px solid var(--success);
-            border-radius: 4px;
-            letter-spacing: 1px;
-        }
+    .header-title {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
 
-        /* --- FORM GRID --- */
-        .form-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-        }
+    .status-badge {
+        font-family: 'Fira Code', monospace;
+        font-size: 11px;
+        padding: 6px 14px;
+        background: rgba(0, 255, 170, 0.05);
+        color: var(--success);
+        border: 1px solid var(--success);
+        border-radius: 20px;
+        letter-spacing: 1px;
+        box-shadow: 0 0 15px rgba(0, 255, 170, 0.2), inset 0 0 10px rgba(0, 255, 170, 0.1);
+        animation: pulseGlow 2s infinite alternate;
+    }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+    /* --- GLASS PANEL (Form & Data) --- */
+    .form-panel, .data-panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 40px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.02);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        position: relative;
+        overflow: hidden;
+    }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+    /* Efek cahaya miring halus di pojok panel */
+    .form-panel::before, .data-panel::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, transparent 40%);
+        pointer-events: none;
+    }
 
-        .form-group.full-width { grid-column: span 2; }
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
 
-        label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--glass-border);
-            border-radius: 6px;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            transition: 0.3s;
-        }
+    .form-group.full-width { grid-column: span 2; }
 
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-glow);
-        }
+    label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.3s;
+    }
+    
+    .form-group:focus-within label {
+        color: var(--primary-color);
+        text-shadow: 0 0 8px var(--primary-glow);
+    }
 
-        textarea { resize: vertical; min-height: 80px; }
+    /* Neon Inputs */
+    input, select, textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(5, 6, 10, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
 
-        /* Custom File Input */
-        .file-drop-area {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 10px;
-            padding: 25px;
-            border: 1px dashed var(--glass-border);
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            transition: 0.3s;
-            text-align: center;
-        }
-        .file-drop-area:hover { border-color: var(--primary-color); background: rgba(212, 175, 55, 0.05); }
-        .file-input { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .file-msg { font-size: 12px; color: var(--text-muted); }
-        .file-icon { font-size: 24px; color: var(--primary-color); }
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background: rgba(5, 6, 10, 0.8);
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.05);
+    }
 
-        .btn {
-            padding: 14px 30px;
-            background: var(--primary-color);
-            color: #000;
-            border: none;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+    textarea { resize: vertical; min-height: 90px; }
 
-        .btn:hover {
-            box-shadow: 0 0 20px var(--primary-glow);
-            transform: translateY(-2px);
-        }
+    /* Custom File Input (Futuristic Dropzone) */
+    .file-drop-area {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        padding: 30px;
+        border: 1px dashed rgba(0, 243, 255, 0.3);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+        text-align: center;
+    }
+    .file-drop-area:hover { 
+        border-color: var(--accent-color); 
+        background: rgba(255, 0, 127, 0.03);
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.1);
+    }
+    .file-input { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 5; }
+    .file-msg { font-size: 12px; color: var(--text-muted); z-index: 2; letter-spacing: 1px; }
+    .file-icon { font-size: 26px; color: var(--primary-color); z-index: 2; text-shadow: 0 0 10px var(--primary-glow); }
+    
+    /* Thumbnail Preview Style */
+    .edit-thumb-container {
+        margin-top: 5px;
+        z-index: 3;
+    }
+    .edit-thumb-container img {
+        width: 75px;
+        height: 75px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid var(--primary-color);
+        box-shadow: 0 0 15px var(--primary-glow);
+    }
 
-        .btn:disabled {
-            background: #555;
-            color: #888;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
+    /* Cyberpunk Button Effect */
+    .btn {
+        padding: 15px 35px;
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 8px;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    }
 
-        /* --- DATA TABLE --- */
-        .data-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-        }
+    .btn:hover {
+        background: var(--primary-color);
+        color: #020205;
+        box-shadow: 0 0 25px var(--primary-glow), 0 0 50px rgba(0, 243, 255, 0.2);
+        transform: translateY(-2px);
+    }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-        }
-        th {
-            color: var(--primary-color);
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        td img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid var(--glass-border); }
-        
-        .btn-delete {
-            background: rgba(255, 71, 87, 0.1);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: 0.3s;
-        }
-        .btn-delete:hover { background: var(--danger); color: #fff; }
+    .btn:active {
+        transform: translateY(1px);
+    }
 
-        /* Loader */
-        .compression-loader {
-            display: none;
-            color: var(--primary-color);
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            margin-top: 10px;
-        }
+    .btn:disabled {
+        background: rgba(255,255,255,0.05);
+        color: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.1);
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
 
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--glass-border); padding: 20px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .main-content { padding: 20px; }
-            .header-title { font-size: 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
-        }
+    /* --- CYBER DATA TABLE --- */
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    
+    tr {
+        transition: 0.3s;
+    }
+    
+    tr:hover td {
+        background: rgba(0, 243, 255, 0.02);
+    }
 
-        /* Enkripsi Secure Portal Terminal Style Overlay */
-        #loginOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #050508;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: 
-                linear-gradient(rgba(5, 5, 8, 0.95), rgba(5, 5, 8, 0.95)),
-                radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 60%);
-        }
-        .login-box {
-            background: var(--panel-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 40px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            backdrop-filter: blur(15px);
-        }
-    </style>
+    th, td {
+        padding: 18px 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+        font-size: 14px;
+    }
+
+    th {
+        color: var(--accent-color);
+        text-transform: uppercase;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 14px;
+        letter-spacing: 2px;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(255, 0, 127, 0.2);
+    }
+
+    td img { 
+        width: 45px; 
+        height: 45px; 
+        object-fit: cover; 
+        border-radius: 6px; 
+        border: 1px solid rgba(255,255,255,0.1); 
+    }
+    
+    /* Neon Delete Button */
+    .btn-delete {
+        background: transparent;
+        color: var(--danger);
+        border: 1px solid var(--danger);
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+    .btn-delete:hover { 
+        background: var(--danger); 
+        color: #fff; 
+        box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+    }
+
+    /* Loader Terminal Style */
+    .compression-loader {
+        color: var(--accent-color);
+        font-family: 'Fira Code', monospace;
+        font-size: 12px;
+        margin-top: 10px;
+        text-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 10px rgba(0, 255, 170, 0.2); }
+        100% { box-shadow: 0 0 20px rgba(0, 255, 170, 0.4), inset 0 0 15px rgba(0, 255, 170, 0.2); }
+    }
+
+    @media (max-width: 768px) {
+        body { flex-direction: column; }
+        .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--glass-border); padding: 20px; }
+        .form-grid { grid-template-columns: 1fr; }
+        .main-content { padding: 20px; }
+        .header-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    /* --- OVERLAY TERMINAL SCREEN --- */
+    #loginOverlay {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: #020205;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: 
+            linear-gradient(rgba(2, 2, 5, 0.9), rgba(2, 2, 5, 0.95)),
+            radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 60%);
+    }
+
+    .login-box {
+        background: rgba(10, 11, 18, 0.55);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(0, 243, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+</style>
 </head>
 <body>
 
@@ -333,16 +443,12 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Pilih Kategori (Grup Baris)</label>
+                        <label>
+                            Pilih Kategori (Grup Baris)
+                            <span style="float: right; font-size: 11px; cursor: pointer; color: var(--success); text-transform: none; font-weight: normal;" onclick="addNewCategory()"><i class="fas fa-plus-circle"></i> + Etalase Baru</span>
+                        </label>
                         <select id="prodCategory" required>
-                            <option value="">-- Pilih Etalase --</option>
-                            <option value="formal">Jas & Pakaian Dinas Formal</option>
-                            <option value="pdl">Kemeja Kerja Lapangan PDL & PDH</option>
-                            <option value="polo">Polo Shirt & Kaos Kerah Distro</option>
-                            <option value="kaos">Kaos Sablon Distro & Kaos Olahraga</option>
-                            <option value="bomber">Jaket Bomber Instansi</option>
-                            <option value="topi">Topi Custom Distro</option>
-                        </select>
+                            </select>
                     </div>
 
                     <div class="form-group full-width">
@@ -353,8 +459,11 @@
                     <div class="form-group">
                         <label>Gambar 1: Model Preview</label>
                         <div class="file-drop-area">
-                            <i class="fas fa-cloud-upload-alt file-icon"></i>
+                            <i class="fas fa-cloud-upload-alt file-icon" id="iconImg1"></i>
                             <span class="file-msg" id="msgImg1">Pilih atau Tarik File Gambar Kesini</span>
+                            <div class="edit-thumb-container" id="thumbContainer1">
+                                <img id="previewImg1" src="" alt="Thumbnail 1">
+                            </div>
                             <input class="file-input" type="file" id="prodImg1" accept="image/*" required>
                         </div>
                     </div>
@@ -362,8 +471,11 @@
                     <div class="form-group">
                         <label>Gambar 2: Real Pick (Asli)</label>
                         <div class="file-drop-area">
-                            <i class="fas fa-camera file-icon"></i>
+                            <i class="fas fa-camera file-icon" id="iconImg2"></i>
                             <span class="file-msg" id="msgImg2">Pilih atau Tarik File Gambar Kesini</span>
+                            <div class="edit-thumb-container" id="thumbContainer2">
+                                <img id="previewImg2" src="" alt="Thumbnail 2">
+                            </div>
                             <input class="file-input" type="file" id="prodImg2" accept="image/*" required>
                         </div>
                     </div>
@@ -393,7 +505,7 @@
     </div>
 
     <script>
-      // =================================================================
+// =================================================================
 // SYSTEM APPLICATION CORE: CLOUDFLARE EDGE CONFIGURATION (MULTIPART)
 // =================================================================
 const WORKER_API_URL = 'https://user.djavuindonesia.com/api/products';
@@ -409,6 +521,53 @@ let isEditMode = false;
 let currentEditId = null;
 let cacheLoadedProducts = []; 
 
+// DATA REPOSITORI KATEGORI (DEFAULT BASE)
+const baseCategories = {
+    formal: "Jas & Pakaian Dinas Formal",
+    pdl: "Kemeja Kerja Lapangan PDL & PDH",
+    polo: "Polo Shirt & Kaos Kerah Distro",
+    kaos: "Kaos Sablon Distro & Kaos Olahraga",
+    bomber: "Jaket Bomber Instansi",
+    topi: "Topi Custom Distro"
+};
+
+// FITUR BARU: Fungsi memuat data kategori ke Select Dropdown (Gabungan Base + LocalStorage)
+function renderCategoryOptions() {
+    const selectEl = document.getElementById('prodCategory');
+    selectEl.innerHTML = '<option value="">-- Pilih Etalase --</option>';
+    
+    // Ambil kategori kustom dari localStorage jika ada
+    let customCategories = JSON.parse(localStorage.getItem('djavu_custom_categories')) || {};
+    let combinedCategories = { ...baseCategories, ...customCategories };
+    
+    for (const [key, value] of Object.entries(combinedCategories)) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = value;
+        selectEl.appendChild(option);
+    }
+}
+
+// FITUR BARU: Fungsi menambah etalase/kategori baru secara lokal
+window.addNewCategory = function() {
+    const uniqueKey = prompt("Masukkan ID Kategori Unik (Huruf kecil tanpa spasi, contoh: rompi, jersey):");
+    if (!uniqueKey) return;
+    
+    const cleanKey = uniqueKey.toLowerCase().replace(/\s+/g, '-').trim();
+    if (cleanKey === "") { alert("ID Kategori tidak valid!"); return; }
+    
+    const displayTitle = prompt("Masukkan Nama Tampilan Etalase (Contoh: Rompi Kerja Lapangan):");
+    if (!displayTitle || displayTitle.trim() === "") { alert("Nama Tampilan tidak boleh kosong!"); return; }
+    
+    let customCategories = JSON.parse(localStorage.getItem('djavu_custom_categories')) || {};
+    customCategories[cleanKey] = displayTitle.trim();
+    
+    localStorage.setItem('djavu_custom_categories', JSON.stringify(customCategories));
+    renderCategoryOptions();
+    document.getElementById('prodCategory').value = cleanKey;
+    alert(`Etalase baru "${displayTitle}" berhasil ditambahkan ke sistem kontrol admin!`);
+};
+
 // Mengunci halaman apabila session token milik admin belum aktif
 function checkSecureSession() {
     const token = sessionStorage.getItem('djavu_admin_token');
@@ -417,6 +576,7 @@ function checkSecureSession() {
         dbStatusLabel.className = "status-badge";
         dbStatusLabel.style.cssText = "background: rgba(46, 213, 115, 0.1); color: var(--success); border-color: var(--success);";
         dbStatusLabel.innerHTML = '<i class="fas fa-satellite-dish"></i> DB: CLOUDFLARE_D1 [SECURED]';
+        renderCategoryOptions(); // Muat kategori
         loadTableData();
     }
 }
@@ -429,14 +589,22 @@ function loginAdmin() {
     window.location.reload();
 }
 
-// Decorator Input File Listener
+// Decorator Input File Listener (Menghilangkan ikon utama dan mengganti teks saat file dipilih)
 document.getElementById('prodImg1').addEventListener('change', function(e) {
-    document.getElementById('msgImg1').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
-    document.getElementById('msgImg1').style.color = "#d4af37";
+    if(e.target.files[0]) {
+        document.getElementById('msgImg1').textContent = e.target.files[0].name;
+        document.getElementById('msgImg1').style.color = "#d4af37";
+        document.getElementById('thumbContainer1').style.display = 'none'; // Sembunyikan thumb lama jika user pilih file baru
+        document.getElementById('iconImg1').style.display = 'block';
+    }
 });
 document.getElementById('prodImg2').addEventListener('change', function(e) {
-    document.getElementById('msgImg2').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih File";
-    document.getElementById('msgImg2').style.color = "#d4af37";
+    if(e.target.files[0]) {
+        document.getElementById('msgImg2').textContent = e.target.files[0].name;
+        document.getElementById('msgImg2').style.color = "#d4af37";
+        document.getElementById('thumbContainer2').style.display = 'none';
+        document.getElementById('iconImg2').style.display = 'block';
+    }
 });
 
 // WEBP Compression Engine
@@ -486,10 +654,15 @@ async function loadTableData() {
             return;
         }
 
+        // Ambil data kamus kategori gabungan untuk render nama kategori manusiawi di tabel
+        let customCategories = JSON.parse(localStorage.getItem('djavu_custom_categories')) || {};
+        let allCategories = { ...baseCategories, ...customCategories };
+
         cacheLoadedProducts.forEach((prod) => {
             const tr = document.createElement('tr');
+            const humanCategory = allCategories[prod.category] || prod.category.toUpperCase();
             tr.innerHTML = `
-                <td><span style="background: rgba(212,175,55,0.05); color: var(--primary-color); padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform:uppercase;">${prod.category}</span></td>
+                <td><span style="background: rgba(212,175,55,0.05); color: var(--primary-color); padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform:uppercase;">${humanCategory}</span></td>
                 <td><img src="${prod.img1}" alt="preview"></td>
                 <td style="font-weight: 600;">${prod.title}</td>
                 <td>
@@ -504,7 +677,7 @@ async function loadTableData() {
     }
 }
 
-// Memasukkan data katalog terpilih ke dalam Form untuk siap diubah (PUT)
+// FITUR REVISI: Memasukkan data katalog terpilih ke Form lengkap dengan PRATINJAU VISUAL GAMBAR AKTIF (PUT)
 window.initiateEditMode = function(id) {
     const targetProduct = cacheLoadedProducts.find(p => p.id === id);
     if(!targetProduct) return;
@@ -517,10 +690,20 @@ window.initiateEditMode = function(id) {
     document.getElementById('prodCategory').value = targetProduct.category;
     document.getElementById('prodDesc').value = targetProduct.description;
 
+    // Tampilkan Pratinjau Gambar Aktif yang ada di server R2 saat ini
+    document.getElementById('previewImg1').src = targetProduct.img1;
+    document.getElementById('previewImg2').src = targetProduct.img2;
+    document.getElementById('thumbContainer1').style.display = 'block';
+    document.getElementById('thumbContainer2').style.display = 'block';
+    
+    // Sembunyikan icon awan default agar tidak menumpuk dengan thumbnail preview
+    document.getElementById('iconImg1').style.display = 'none';
+    document.getElementById('iconImg2').style.display = 'none';
+
     // Merubah info label input file
-    document.getElementById('msgImg1').textContent = "Gambar tersimpan aktif (Pilih file baru jika ingin ganti)";
+    document.getElementById('msgImg1').textContent = "Menggunakan gambar aktif di cloud";
     document.getElementById('msgImg1').style.color = "#2ed573";
-    document.getElementById('msgImg2').textContent = "Gambar tersimpan aktif (Pilih file baru jika ingin ganti)";
+    document.getElementById('msgImg2').textContent = "Menggunakan gambar aktif di cloud";
     document.getElementById('msgImg2').style.color = "#2ed573";
 
     // Ubah mode visual tombol submit
@@ -535,20 +718,33 @@ window.initiateEditMode = function(id) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// Reset Form Kembali ke Mode Tambah Normal
+// FITUR REVISI: Reset Form Kembali ke Mode Tambah Normal + Bersihkan Semua Thumbnail Preview
 window.resetFormToNormal = function() {
     form.reset();
     isEditMode = false;
     currentEditId = null;
+    
     submitBtn.innerHTML = '<i class="fas fa-database"></i> Simpan & Publish Produk';
     submitBtn.style.background = 'var(--primary-color)';
     submitBtn.style.color = '#000';
+    
     document.getElementById('prodImg1').required = true;
     document.getElementById('prodImg2').required = true;
+    
     document.getElementById('msgImg1').textContent = "Pilih atau Tarik File Gambar Kesini";
     document.getElementById('msgImg1').style.color = "";
     document.getElementById('msgImg2').textContent = "Pilih atau Tarik File Gambar Kesini";
     document.getElementById('msgImg2').style.color = "";
+
+    // Sembunyikan total container pratinjau gambar edit
+    document.getElementById('thumbContainer1').style.display = 'none';
+    document.getElementById('thumbContainer2').style.display = 'none';
+    document.getElementById('previewImg1').src = "";
+    document.getElementById('previewImg2').src = "";
+    
+    // Tampilkan kembali icon default
+    document.getElementById('iconImg1').style.display = 'block';
+    document.getElementById('iconImg2').style.display = 'block';
 };
 
 // POST atau PUT Submission Handler (Multipart FormData ke R2 & D1)
