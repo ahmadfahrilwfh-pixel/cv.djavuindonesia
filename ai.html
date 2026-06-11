@@ -22,7 +22,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Buat Kaos Murah Klaten | Konveksi Profesional Klaten">
-    <meta name="twitter:description" content="Layanan terbaik buat kaos murah Klaten dan konveksi profesional Klaten untuk seragam premium.">
+    <meta name="twitter:description" content="Layanan terbaik buat kaos murah Klaten and konveksi profesional Klaten untuk seragam premium.">
     <meta name="twitter:image" content="./logo-buat-kaos-murah-klaten.webp">
 
 <script type="application/ld+json">
@@ -60,8 +60,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
@@ -511,6 +509,7 @@
             border-bottom: 1px solid var(--glass-border); 
             padding-bottom: 8px; 
             margin-bottom: 10px;
+            margin-top: 15px;
         }
 
         .fabric-info-section { 
@@ -621,9 +620,8 @@
                 position: absolute; top: 100%; left: 0; width: 100%; background: var(--card-bg); 
                 flex-direction: column; gap: 0; text-align: center; max-height: 0; overflow: hidden; 
                 transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-                border-bottom: 1px solid var(--glass-border);
             }
-            .nav-links.active { max-height: 350px; }
+            .nav-links.active { max-height: 350px; border-bottom: 1px solid var(--glass-border); }
             .nav-links li { padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); }
             .about-grid { grid-template-columns: 1fr; padding: 25px; gap: 25px; } 
             .about-image { min-height: 340px; height: auto; } 
@@ -726,166 +724,21 @@
         <h2 class="section-title">Katalog Buat Kaos Murah Klaten</h2>
         <p class="catalog-desc">Inilah portofolio produk unggulan dari pabrik konveksi profesional Klaten kami. Siap dikustomisasi penuh sesuai kebutuhan branding komunitas, sekolah, universitas, maupun manajemen perusahaan korporat Anda.</p>
         
-        <div class="catalog-container">
-            <h3 class="catalog-category-title">Jas & Pakaian Dinas Formal</h3>
-            <div class="catalog-scroll-row" id="row-formal">
-                <div class="catalog-item" data-title="Jas Almamater Premium Klaten" data-img1="./buat-kaos-murah-klaten-almamater.webp" data-img2="./konveksi-profesional-klaten-real-almamater.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-almamater.webp" alt="Layanan Buat Kaos Murah Klaten - Model Jas Almamater" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-almamater.webp" alt="Konveksi Profesional Klaten - Real Pick Jas Almamater" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Jas Almamater / Blazer</h3>
-                        <p>Produk konveksi profesional Klaten dengan pola pas badan standar eksklusif kampus.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="catalog-container" id="dynamicCatalogContainer">
+            <h3 class="catalog-category-title" id="title-formal">Jas & Pakaian Dinas Formal</h3>
+            <div class="catalog-scroll-row" id="row-formal"></div>
 
-            <h3 class="catalog-category-title">Kemeja Kerja Lapangan PDL & PDH</h3>
-            <div class="catalog-scroll-row" id="row-pdl">
-                <div class="catalog-item" data-title="Kemeja PDL Lapangan Klaten" data-img1="./buat-kaos-murah-klaten-pdl.webp" data-img2="./konveksi-profesional-klaten-real-pdl.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl.webp" alt="Pabrik Tempat Buat Kaos Murah Klaten - Kemeja PDL" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl.webp" alt="Konveksi Profesional Klaten - Hasil Kemeja PDL Lapangan" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kemeja PDL Lapangan</h3>
-                        <p>Kain drill kokoh sirkulasi udara optimal hasil pengerjaan konveksi profesional Klaten.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kemeja PDL Komunitas Klasik" data-img1="./buat-kaos-murah-klaten-pdl-klasik.webp" data-img2="./konveksi-profesional-klaten-real-pdl-klasik.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-klasik.webp" alt="Layanan Buat Kaos Murah Klaten - Kemeja PDL Klasik" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-klasik.webp" alt="Konveksi Profesional Klaten - Real Kemeja PDL Komunitas" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kemeja PDL Klasik</h3>
-                        <p>Kombinasi warna tegas untuk seragam dinamis organisasi atau club motor Klaten.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kemeja PDL Corporate Uniform" data-img1="./buat-kaos-murah-klaten-pdl-korporat.webp" data-img2="./konveksi-profesional-klaten-real-pdl-korporat.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-korporat.webp" alt="Tempat Buat Kaos Murah Klaten - Kemeja Korporat" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-korporat.webp" alt="Konveksi Profesional Klaten - Seragam Karyawan Retail Resto" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kemeja PDL Korporat</h3>
-                        <p>Tampilan rapi kelas premium untuk kru operational retail, hotel, and restoran Anda.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kemeja PDL Seragam Basic" data-img1="./buat-kaos-murah-klaten-pdl-basic.webp" data-img2="./konveksi-profesional-klaten-real-pdl-basic.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-basic.webp" alt="Vendor Tempat Buat Kaos Murah Klaten - Kemeja Basic" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-basic.webp" alt="Konveksi Profesional Klaten - Real Kemeja Bordir Komputer" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kemeja PDL Basic</h3>
-                        <p>Konstruksi jahitan lipat dalam dipadu aplikasi sistem komputerisasi benang bordir tajam.</p>
-                    </div>
-                </div>
-            </div>
+            <h3 class="catalog-category-title" id="title-pdl">Kemeja Kerja Lapangan PDL & PDH</h3>
+            <div class="catalog-scroll-row" id="row-pdl"></div>
 
-            <h3 class="catalog-category-title">Polo Shirt & Kaos Kerah Distro</h3>
-            <div class="catalog-scroll-row" id="row-polo">
-                <div class="catalog-item" data-title="Kaos Polo Lacoste Lengan Panjang" data-img1="./buat-kaos-murah-klaten-lacoste-panjang.webp" data-img2="./konveksi-profesional-klaten-real-lacoste-panjang.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-lacoste-panjang.webp" alt="Jasa Buat Kaos Murah Klaten - Polo Lengan Panjang" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-lacoste-panjang.webp" alt="Konveksi Profesional Klaten - Kaos Polo Lengan Panjang" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Lacoste Lengan Panjang</h3>
-                        <p>Pilihan tepat buat kaos murah Klaten model polo formal berpola pelindung sinar UV matahari.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kaos Kerah Lacoste Sporty" data-img1="./buat-kaos-murah-klaten-polo-lacoste.webp" data-img2="./konveksi-profesional-klaten-real-polo-lacoste.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-polo-lacoste.webp" alt="Pabrik Buat Kaos Murah Klaten - Polo Lacoste" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-polo-lacoste.webp" alt="Konveksi Profesional Klaten - Foto Asli Polo Shirt" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kaos Kerah Lacoste</h3>
-                        <p>Bahan rajut piku tebal berpori rapat, warna kain solid anti luntur teruji kualitasnya.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kaos Kerah Cotton Semi Formal" data-img1="./buat-kaos-murah-klaten-polo-cotton.webp" data-img2="./konveksi-profesional-klaten-real-polo-cotton.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-polo-cotton.webp" alt="Workshop Buat Kaos Murah Klaten - Polo Cotton" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-polo-cotton.webp" alt="Konveksi Profesional Klaten - Polo Cotton Combed" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kaos Kerah Cotton</h3>
-                        <p>Sangat lembut, menyerap keringat ekstra, dirancang khusus oleh konveksi profesional Klaten.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kaos Kerah Lacoste Executive" data-img1="./buat-kaos-murah-klaten-lacoste-premium.webp" data-img2="./konveksi-profesional-klaten-real-lacoste-premium.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-lacoste-premium.webp" alt="Tempat Buat Kaos Murah Klaten - Polo Lacoste Premium" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-lacoste-premium.webp" alt="Konveksi Profesional Klaten - Polo Premium Instansi" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Lacoste Premium</h3>
-                        <p>Kombinasi rib kerah elastis elegan untuk keperluan seragam semi-formal manajemen bisnis.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Jaket Racing / Motor Sport" data-img1="./buat-kaos-murah-klaten-jaket-racing.webp" data-img2="./konveksi-profesional-klaten-real-jaket-racing.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-jaket-racing.webp" alt="Konveksi Profesional Klaten - Model Jaket Racing" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-jaket-racing.webp" alt="Buat Kaos Murah Klaten - Hasil Jaket Windbreaker" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Jaket Racing</h3>
-                        <p>Lapisan furing dalam tebal windproof, pilihan solid club otomotif regional Jawa Tengah.</p>
-                    </div>
-                </div>
-            </div>
+            <h3 class="catalog-category-title" id="title-polo">Polo Shirt & Kaos Kerah Distro</h3>
+            <div class="catalog-scroll-row" id="row-polo"></div>
 
-            <h3 class="catalog-category-title">Kaos Sablon Distro & Kaos Olahraga</h3>
-            <div class="catalog-scroll-row" id="row-kaos">
-                <div class="catalog-item" data-title="Kaos Sablon Plastisol Premium" data-img1="./buat-kaos-murah-klaten-sablon-premium.webp" data-img2="./konveksi-profesional-klaten-real-sablon-premium.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-sablon-premium.webp" alt="Pusat Buat Kaos Murah Klaten - Kaos Sablon" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-sablon-premium.webp" alt="Konveksi Profesional Klaten - Sablon Anti Retak" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kaos Sablon Premium</h3>
-                        <p>Tinta plastisol pekat merekat kuat, hasil pengerjaan andalan tempat buat kaos murah Klaten.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kaos Olahraga Dry-Fit Klaten" data-img1="./buat-kaos-murah-klaten-dryfit.webp" data-img2="./konveksi-profesional-klaten-real-dryfit.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-dryfit.webp" alt="Garmen Buat Kaos Murah Klaten - Jersey Olahraga" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-dryfit.webp" alt="Konveksi Profesional Klaten - Kaos Dry Fit Microfiber" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kaos Olahraga Dry-Fit</h3>
-                        <p>Pori sirkulasi mikro cepat kering keringat, produk terlaris di konveksi profesional Klaten kami.</p>
-                    </div>
-                </div>
-                <div class="catalog-item" data-title="Kaos Casual Cotton Combed Asli" data-img1="./buat-kaos-murah-klaten-cotton-combed.webp" data-img2="./konveksi-profesional-klaten-real-cotton-combed.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-cotton-combed.webp" alt="Konveksi Profesional Klaten - Kaos Cotton Combed" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-cotton-combed.webp" alt="Tempat Buat Kaos Murah Klaten - T-Shirt Distro" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Kaos Cotton Combed</h3>
-                        <p>Material serat katun alami 100%, jaminan super adem untuk iklim tropis perkotaan Klaten.</p>
-                    </div>
-                </div>
-            </div>
+            <h3 class="catalog-category-title" id="title-kaos">Kaos Sablon Distro & Kaos Olahraga</h3>
+            <div class="catalog-scroll-row" id="row-kaos"></div>
 
-            <h3 class="catalog-category-title">Jaket Bomber Instansi</h3>
-            <div class="catalog-scroll-row" id="row-bomber">
-                <div class="catalog-item" data-title="Jaket Bomber Casual Corporate" data-img1="./buat-kaos-murah-klaten-bomber.webp" data-img2="./konveksi-profesional-klaten-real-bomber.webp">
-                    <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-bomber.webp" alt="Buat Kaos Murah Klaten - Jaket Bomber Premium" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-bomber.webp" alt="Konveksi Profesional Klaten - Foto Jaket Bomber Perusahaan" class="img-real">
-                    </div>
-                    <div class="item-info">
-                        <h3>Jaket Bomber Windproof</h3>
-                        <p>Desain kokoh, kantong fungsional, andalan apparel dinas luar ruangan karyawan Anda.</p>
-                    </div>
-                </div>
-            </div>
+            <h3 class="catalog-category-title" id="title-bomber">Jaket Bomber Instansi</h3>
+            <div class="catalog-scroll-row" id="row-bomber"></div>
         </div>
 
         <div class="fabric-info-section">
@@ -894,7 +747,6 @@
                 <h3>Bahan Kaos Polo: Cotton CVC Pique Hexagon</h3>
             </div>
             <p class="fabric-description">Rekomendasi terbaik bagi Anda yang ingin <strong>buat kaos murah Klaten</strong> jenis polo krah. Campuran kain 60% Cotton dan 40% Polyester ini memiliki corak rajut segi enam unik, sangat awet, tidak gampang kusut, dan dikerjakan rapi oleh team ahli di workshop konveksi profesional Klaten kami.</p>
-
             <div class="fabric-section-title"><i class="fas fa-star" style="color: var(--primary-color);"></i> Mengapa Harus Memilih Konveksi Klaten Kami?</div>
             <div class="fabric-scroll-container">
                 <div class="fabric-box-item">
@@ -914,9 +766,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="warna-kain-cvc.html" class="color-selection-btn">
-                    <i class="fas fa-palette"></i> Cek Pilihan Warna Kaos Polo Klaten
-                </a>
+                <a href="warna-kain-cvc.html" class="color-selection-btn"><i class="fas fa-palette"></i> Cek Pilihan Warna Kaos Polo Klaten</a>
             </div>
         </div>
 
@@ -926,7 +776,6 @@
                 <h3>Bahan Kaos Polo Premium: Cotton Combed Pique Diamond</h3>
             </div>
             <p class="fabric-description">Lini kain katun 100% murni kelas distro teratas untuk vendor <strong>konveksi profesional Klaten</strong>. Hadir dengan corak rajutan berlian yang mewah, berpori sirkulasi udara sejuk, anti susut pasca pencucian berulang, sangat cocok dipadankan dengan aplikasi bordir identitas perusahaan.</p>
-
             <div class="fabric-section-title"><i class="fas fa-star" style="color: var(--primary-color);"></i> Standar Mutu Garment Klaten</div>
             <div class="fabric-scroll-container">
                 <div class="fabric-box-item">
@@ -951,9 +800,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="warna-kain.html" class="color-selection-btn">
-                    <i class="fas fa-palette"></i> Pilihan Warna Polo Diamond Klaten
-                </a>
+                <a href="warna-kain.html" class="color-selection-btn"><i class="fas fa-palette"></i> Pilihan Warna Polo Diamond Klaten</a>
             </div>
         </div>
 
@@ -963,11 +810,8 @@
                 <h3>Bahan Kaos Sablon Distro: Cotton Combed Premium</h3>
             </div>
             <p class="fabric-description">Bahan baku wajib bagi Anda yang ingin order di tempat <strong>buat kaos murah Klaten</strong> dengan hasil kelembutan kulit tingkat tinggi. Serat kapas diproses combing eliminasi bulu benang pendek, menghasilkan tekstur kain sangat halus, menyerap keringat instan, ideal untuk media sablon discharge, plastisol, maupun DTF.</p>
-
             <div style="text-align: center;">
-                <a href="warna-kain-cottoncombed.html" class="color-selection-btn">
-                    <i class="fas fa-palette"></i> Mock Up & Katalog Warna Kaos Combed
-                </a>
+                <a href="warna-cottoncombed.html" class="color-selection-btn"><i class="fas fa-palette"></i> Mock Up & Katalog Warna Kaos Combed</a>
             </div>
         </div>
 
@@ -977,11 +821,8 @@
                 <h3>Bahan Kemeja PDH Eksekutif: Nagata Drill</h3>
             </div>
             <p class="fabric-description">Raja kain drill andalan vendor <strong>konveksi profesional Klaten</strong> untuk kemeja seragam kerja outdoor maupun instansi pemerintahan. Mengandung komposisi katun dominan, super adem saat dipakai siang hari, anyaman benang miring tebal tidak menerawang, memberikan kesan gagah dan sangat berwibawa.</p>
-
             <div style="text-align: center;">
-                <a href="warna-kain-nagatadrill.html" class="color-selection-btn">
-                    <i class="fas fa-palette"></i> Pilihan Warna Kain Nagata Drill Klaten
-                </a>
+                <a href="warna-kain-nagatadrill.html" class="color-selection-btn"><i class="fas fa-palette"></i> Pilihan Warna Kain Nagata Drill Klaten</a>
             </div>
         </div>
 
@@ -991,11 +832,8 @@
                 <h3>Bahan Kemeja PDL Lapangan: American Drill</h3>
             </div>
             <p class="fabric-description">Solusi cerdas paket hemat yang ditawarkan oleh pabrik <strong>konveksi profesional Klaten</strong> kami. Ketahanan gesekan fisik yang luar biasa tinggi dipadukan dengan efisiensi biaya, menjadikannya pilihan kain nomor satu untuk pakaian wearpack, rompi outdoor, celana kargo, dan baju komunitas lapangan Klaten.</p>
-
             <div style="text-align: center;">
-                <a href="warna-kain-americandrill.html" class="color-selection-btn">
-                    <i class="fas fa-palette"></i> Katalog Pilihan Warna American Drill
-                </a>
+                <a href="warna-kain-americandrill.html" class="color-selection-btn"><i class="fas fa-palette"></i> Katalog Pilihan Warna American Drill</a>
             </div>
         </div>
     </section>
@@ -1003,27 +841,27 @@
     <section id="location">
         <h2 class="section-title">Alamat Konveksi Profesional Klaten</h2>
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d213.95154383471382!2d110.58480573485252!3d-7.743230401419015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a444cc535a423%3A0xd5e989bd81a8b3c1!2sQ'Mutan%20Itik%20-%20Kancing!5e1!3m2!1sid!2sid!4v1780682131589!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Workshop Buat Kaos Murah Klaten - CV Djavu Indonesia"></iframe>
+            <iframe src="https://maps.google.com/maps?q=Jl.%20Jend.%20Sudirman,%20Kadilayar,%20Kajoran,%20Klaten&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Workshop Buat Kaos Murah Klaten - CV Djavu Indonesia"></iframe>
         </div>
     </section>
 
-   <footer id="contact">
+    <footer id="contact">
         <h2 class="section-title" style="margin-bottom: 15px;">Hubungi Vendor Kaos Klaten</h2>
         <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Diskusikan kebutuhan buat kaos murah Klaten dan konsultasikan desain baju Anda secara gratis bersama admin konveksi profesional Klaten kami. Email resmi: info@djavuindonesia.com</p>
         
-<div class="social-links">
-    <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp Buat Kaos Murah Klaten"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.instagram.com/djavuindonesia.official?igsh=MTlwaHVkOHM5NnI3MQ==" target="_blank" title="Instagram Konveksi Profesional Klaten"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.tiktok.com/@djavuindonesia.off?_r=1&_t=ZS-973VonbuODV" target="_blank" title="TikTok Garmen Klaten"><i class="fab fa-tiktok"></i></a>
-    <a href="https://www.facebook.com/profile.php?id=61590541237344" target="_blank" title="Facebook Konveksi Klaten Terdekat"><i class="fab fa-facebook-f"></i></a>
-    <a href="mailto:info@djavuindonesia.com" target="_blank" title="Email Penawaran Harga Kaos Klaten"><i class="far fa-envelope"></i></a>
-</div>
+        <div class="social-links">
+            <a href="https://wa.me/6281369602596" target="_blank" title="WhatsApp Buat Kaos Murah Klaten"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/djavuindonesia.official?igsh=MTlwaHVkOHM5NnI3MQ==" target="_blank" title="Instagram Konveksi Profesional Klaten"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@djavuindonesia.off?_r=1&_t=ZS-973VonbuODV" target="_blank" title="TikTok Garmen Klaten"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61590541237344" target="_blank" title="Facebook Konveksi Klaten Terdekat"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:info@djavuindonesia.com" target="_blank" title="Email Penawaran Harga Kaos Klaten"><i class="far fa-envelope"></i></a>
+        </div>
         
         <div class="footer-bottom">
             <div class="copyright">© 2026 CV. Djavu Indonesia | Tempat Buat Kaos Murah Klaten | Konveksi Profesional Klaten. All Rights Reserved.</div>
             <div class="developer-tag">
                 developed by Ahmad Fahril 
-                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release SEO V2.5 Hybrid">v1.26.06.10.25</span>
+                <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: #ffffff;" title="System Core Release SEO V3 Cloudflare Edge Hybrid">v1.26.06.11.CF</span>
             </div>
         </div>
     </footer>
@@ -1046,7 +884,7 @@
         </div>
     </div>
 
-  <script>
+    <script>
         // ==================================================
         // --- ENGINE 1: CINEMATIC LOGO LOADER OPTIMIZED ---
         // ==================================================
@@ -1165,17 +1003,13 @@
             lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
             lTimeline++;
 
-            if (lTimeline === 1) { 
-                lCurrentPhase = 0; 
-            } 
+            if (lTimeline === 1) { lCurrentPhase = 0; } 
             else if (lTimeline === 25) { 
                 lCurrentPhase = 1; 
                 loaderContainer.classList.add('lightning-flash-screen');
                 setTimeout(() => loaderContainer.classList.remove('lightning-flash-screen'), 200);
             } 
-            else if (lTimeline === 65) { 
-                lCurrentPhase = 2; 
-            } 
+            else if (lTimeline === 65) { lCurrentPhase = 2; } 
             else if (lTimeline === 95) { 
                 lCurrentPhase = 3; 
                 loaderCanvas.classList.add('loader-canvas-glow');
@@ -1243,17 +1077,6 @@
         const modalImg2 = document.getElementById('modalImg2');
         const modalWaBtn = document.getElementById('modalWaBtn');
 
-        document.querySelectorAll('.catalog-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const title = item.getAttribute('data-title');
-                const img1 = item.getAttribute('data-img1');
-                const img2 = item.getAttribute('data-img2');
-                modalTitle.textContent = title; modalImg1.src = img1; modalImg2.src = img2;
-                const waText = encodeURIComponent(`Halo admin CV. Djavu Indonesia (Konveksi Profesional Klaten), saya tertarik untuk buat baju custom dengan detail contoh produk: ${title}. Mohon info harga pricelist-nya.`);
-                modalWaBtn.href = `https://wa.me/6281369602596?text=${waText}`;
-                modal.classList.add('show');
-            });
-        });
         closeModalBtn.addEventListener('click', () => { modal.classList.remove('show'); });
         window.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('show'); } });
 
@@ -1309,29 +1132,46 @@
         animateMainSite();
 
         // =====================================================================
-        // --- SECURE ENGINE 3: SUPABASE REAL-TIME PRODUCTS INTEGRATION --------
+        // --- CORE INTERACTION: DYNAMIC PRODUCTS EDGE ENGINE (CLOUDFLARE D1) ---
         // =====================================================================
-        const SUPABASE_URL = 'https://poleyjhuzarxihuglbhn.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvbGV5amh1emFyeGlodWdsYmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTg4MzMsImV4cCI6MjA5NjY3NDgzM30.0KeN0dPvTskEO637E9835SmMQU0nn-dZ_0oL0ET8eU8';
-        
-        // Diubah dari 'supabase' menjadi 'db' untuk menghentikan error duplikasi konstan global library
-        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const WORKER_API_URL = 'https://djavu-api.username.workers.dev/api/products';
+
+        // Kamus penerjemah nama etalase database ke teks judul etalase manusia
+        const humanReadableCategories = {
+            formal: "Jas & Pakaian Dinas Formal",
+            pdl: "Kemeja Kerja Lapangan PDL & PDH",
+            polo: "Polo Shirt & Kaos Kerah Distro",
+            kaos: "Kaos Sablon Distro & Kaos Olahraga",
+            bomber: "Jaket Bomber Instansi",
+            topi: "Topi Custom Distro"
+        };
 
         async function loadDynamicProducts() {
             try {
-                // Fetch data dari Supabase menggunakan instance gateway 'db'
-                const { data: dynamicProducts, error } = await db
-                    .from('djavu_dynamic_products')
-                    .select('*')
-                    .order('created_at', { ascending: true });
-
-                if (error) {
-                    console.error("Transmission Error from Database Core:", error);
-                    return;
-                }
+                const response = await fetch(WORKER_API_URL);
+                if (!response.ok) throw new Error("Gagal mengambil data dari Cloudflare Edge API");
+                
+                const dynamicProducts = await response.json();
+                const catalogContainer = document.getElementById('dynamicCatalogContainer');
                 
                 dynamicProducts.forEach(product => {
-                    const targetRow = document.getElementById(`row-${product.category}`);
+                    let targetRow = document.getElementById(`row-${product.category}`);
+                    
+                    // AUTO-CONSTRUCT ENGINE: Membuat etalase baru secara otomatis jika kategori belum ada di HTML
+                    if (!targetRow && catalogContainer) {
+                        const newHeader = document.createElement('h3');
+                        newHeader.className = 'catalog-category-title';
+                        newHeader.id = `title-${product.category}`;
+                        newHeader.textContent = humanReadableCategories[product.category] || product.category.toUpperCase();
+                        
+                        targetRow = document.createElement('div');
+                        targetRow.className = 'catalog-scroll-row';
+                        targetRow.id = `row-${product.category}`;
+                        
+                        catalogContainer.appendChild(newHeader);
+                        catalogContainer.appendChild(targetRow);
+                    }
+                    
                     if (targetRow) {
                         const itemDiv = document.createElement('div');
                         itemDiv.className = 'catalog-item';
@@ -1350,6 +1190,7 @@
                             </div>
                         `;
                         
+                        // Event Listener Pop-up Modal untuk data dinamis
                         itemDiv.addEventListener('click', () => {
                             modalTitle.textContent = product.title;
                             modalImg1.src = product.img1;
@@ -1362,8 +1203,8 @@
                         targetRow.appendChild(itemDiv);
                     }
                 });
-            } catch (fail) {
-                console.error("System Failure on Engine 3 Runtime:", fail);
+            } catch (error) {
+                console.error("Cloud Dynamic Engine Error:", error);
             }
         }
         document.addEventListener('DOMContentLoaded', loadDynamicProducts);
