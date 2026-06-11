@@ -720,26 +720,11 @@
         </div>
     </section>
 
-    <section id="catalog">
+<section id="catalog">
         <h2 class="section-title">Katalog Buat Kaos Murah Klaten</h2>
         <p class="catalog-desc">Inilah portofolio produk unggulan dari pabrik konveksi profesional Klaten kami. Siap dikustomisasi penuh sesuai kebutuhan branding komunitas, sekolah, universitas, maupun manajemen perusahaan korporat Anda.</p>
         
-        <div class="catalog-container" id="dynamicCatalogContainer">
-            <h3 class="catalog-category-title" id="title-formal">Jas & Pakaian Dinas Formal</h3>
-            <div class="catalog-scroll-row" id="row-formal"></div>
-
-            <h3 class="catalog-category-title" id="title-pdl">Kemeja Kerja Lapangan PDL & PDH</h3>
-            <div class="catalog-scroll-row" id="row-pdl"></div>
-
-            <h3 class="catalog-category-title" id="title-polo">Polo Shirt & Kaos Kerah Distro</h3>
-            <div class="catalog-scroll-row" id="row-polo"></div>
-
-            <h3 class="catalog-category-title" id="title-kaos">Kaos Sablon Distro & Kaos Olahraga</h3>
-            <div class="catalog-scroll-row" id="row-kaos"></div>
-
-            <h3 class="catalog-category-title" id="title-bomber">Jaket Bomber Instansi</h3>
-            <div class="catalog-scroll-row" id="row-bomber"></div>
-        </div>
+        <div class="catalog-container" id="dynamicCatalogContainer"></div>
 
         <div class="fabric-info-section">
             <div class="fabric-header">
@@ -1134,7 +1119,7 @@
         // =====================================================================
         // --- CORE INTERACTION: DYNAMIC PRODUCTS EDGE ENGINE (CLOUDFLARE D1) ---
         // =====================================================================
-        const WORKER_API_URL = 'https://djavu-api.username.workers.dev/api/products';
+        const WORKER_API_URL = 'https://user.djavuindonesia.com/api/products';
 
         // Kamus penerjemah nama etalase database ke teks judul etalase manusia
         const humanReadableCategories = {
@@ -1154,11 +1139,22 @@
                 const dynamicProducts = await response.json();
                 const catalogContainer = document.getElementById('dynamicCatalogContainer');
                 
+                if (!catalogContainer) return;
+                
+                // RESET CONTAINER: Bersihkan etalase agar data yang sudah dihapus tidak membekas
+                catalogContainer.innerHTML = '';
+                
+                // Jika database kosong total karena semua produk dihapus
+                if (dynamicProducts.length === 0) {
+                    catalogContainer.innerHTML = `<p style="text-align:center; color: var(--text-muted); padding: 5px 0; font-size: 14px;">Belum ada katalog produk aktif saat ini.</p>`;
+                    return;
+                }
+                
                 dynamicProducts.forEach(product => {
                     let targetRow = document.getElementById(`row-${product.category}`);
                     
-                    // AUTO-CONSTRUCT ENGINE: Membuat etalase baru secara otomatis jika kategori belum ada di HTML
-                    if (!targetRow && catalogContainer) {
+                    // AUTO-CONSTRUCT ENGINE: Judul kategori HANYA akan dibuat jika ada produknya di cloud
+                    if (!targetRow) {
                         const newHeader = document.createElement('h3');
                         newHeader.className = 'catalog-category-title';
                         newHeader.id = `title-${product.category}`;
@@ -1179,16 +1175,16 @@
                         itemDiv.setAttribute('data-img1', product.img1);
                         itemDiv.setAttribute('data-img2', product.img2);
                         
-                        itemDiv.innerHTML = `
-                            <div class="catalog-images">
-                                <img src="${product.img1}" alt="${product.title}" class="img-model">
-                                <img src="${product.img2}" alt="Real Pick ${product.title}" class="img-real">
-                            </div>
-                            <div class="item-info">
-                                <h3>${product.title}</h3>
-                                <p>${product.description}</p>
-                            </div>
-                        `;
+                    itemDiv.innerHTML = `
+                        <div class="catalog-images">
+                            <img src="${product.img1}" alt="${product.title} - Konveksi Profesional Klaten" class="img-model" loading="lazy">
+                            <img src="${product.img2}" alt="Real Pick ${product.title} - Tempat Buat Kaos Murah Klaten" class="img-real" loading="lazy">
+                        </div>
+                        <div class="item-info">
+                            <h3>${product.title}</h3>
+                            <p>${product.description}</p>
+                        </div>
+                    `;
                         
                         // Event Listener Pop-up Modal untuk data dinamis
                         itemDiv.addEventListener('click', () => {
