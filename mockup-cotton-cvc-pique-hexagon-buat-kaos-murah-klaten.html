@@ -514,14 +514,64 @@
             color: #94a3b8;
         }
 
-        /* Responsive Breakpoints */
+      /* ==========================================================================
+           RESPONSIVE BREAKPOINTS (PERBAIKAN HEADER MOBILE)
+           ========================================================================== */
         @media (max-width: 992px) {
-            .app-container { gap: 32px; padding: 24px; }
-            .model-section { min-width: 100%; }
-            .mockup-wrapper { position: relative; top: 0; max-width: 100%; }
-            .color-grid { max-height: none; }
-            .footer-container { flex-direction: column; gap: 30px; }
-            .footer-bottom-bar { flex-direction: column; text-align: center; gap: 12px; }
+            /* Perbaikan Header agar tidak menumpuk di HP */
+            .header-container {
+                flex-direction: column;
+                gap: 14px;
+                padding: 16px 20px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .brand-identity {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .header-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .btn-cta-header {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+                padding: 10px 16px;
+            }
+
+            /* Aturan layout aplikasi & footer yang sudah ada */
+            .app-container { 
+                gap: 32px; 
+                padding: 24px; 
+            }
+            .model-section { 
+                min-width: 100%; 
+            }
+            .mockup-wrapper { 
+                position: relative; 
+                top: 0; 
+                max-width: 100%; 
+            }
+            .color-grid { 
+                max-height: none; 
+            }
+            .footer-container { 
+                flex-direction: column; 
+                gap: 30px; 
+            }
+            .footer-bottom-bar { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 12px; 
+            }
         }
     </style>
 </head>
