@@ -106,17 +106,21 @@
             transition: background-color 0.5s, color 0.5s;
         }
 
-        /* --- ADVANCED SCROLL ANIMATION --- */
+        /* --- ADVANCED SCROLL ANIMATION (Desktop Only for SEO) --- */
         .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, opacity;
         }
 
-        .animate-on-scroll.active {
-            opacity: 1;
-            transform: translateY(0);
+        @media (min-width: 769px) {
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .animate-on-scroll.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* MICRO-INTERACTION */
@@ -126,60 +130,6 @@
         .interactive-asset:active {
             transform: scale(0.95) !important;
         }
-
-        #loader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: #0a0a0f; z-index: 9999;
-            display: flex; justify-content: center; align-items: center; overflow: hidden;
-            transition: opacity 0.5s, transform 0.5s, filter 0.5s;
-        }
-
-        #loader.fade-out-cinematic {
-            opacity: 0; transform: scale(1.05); filter: blur(15px); pointer-events: none;
-        }
-
-        #loaderCanvas {
-            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            display: block; z-index: 1; transition: filter 0.3s ease;
-        }
-
-        .loader-ui-overlay {
-            position: relative; z-index: 3; width: 100%; height: 100vh;
-            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
-            padding: 55px 20px; pointer-events: none;
-        }
-
-        .welcome-text {
-            font-family: 'Rajdhani', sans-serif; color: #fff; font-size: 21px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 6px; text-align: center; opacity: 0;
-            animation: fadeInUI 0.6s ease forwards 0.1s; text-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
-        }
-
-        .developed-text {
-            font-family: 'Rajdhani', sans-serif; color: var(--accent-blue); font-size: 14px; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 5px; text-align: center; opacity: 0;
-            animation: fadeInUI 0.6s ease forwards 0.2s; text-shadow: 0 2px 8px var(--blue-glow);
-        }
-
-        @keyframes fadeInUI { to { opacity: 0.9; } }
-
-        .lightning-flash-screen { animation: flashTime 0.2s ease-out forwards; }
-        @keyframes flashTime {
-            0% { background-color: #0a0a0f; }
-            15% { background-color: #ffffff; }
-            30% { background-color: var(--accent-blue); }
-            100% { background-color: #0a0a0f; }
-        }
-
-        .loader-canvas-glow { filter: drop-shadow(0 0 20px #d4af37) drop-shadow(0 0 40px rgba(0, 212, 255, 0.4)); }
-
-        nav, #home {
-            opacity: 0; transform: translateY(15px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        body.site-active nav, body.site-active #home { opacity: 1; transform: translateY(0); }
 
         #canvas-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
 
@@ -354,7 +304,7 @@
             .nav-links.active { right: 0; }
             .nav-links li { width: 100%; padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); }
             .about-grid { grid-template-columns: 1fr; padding: 25px; gap: 25px; } .about-image { min-height: 340px; height: auto; } .order-flow-grid { grid-template-columns: 1fr; gap: 30px; } .map-container { height: 300px; } footer { padding: 40px 20px 20px; align-items: center; text-align: center; } .footer-content { align-items: center; text-align: center; }
-        }        
+        }       
         @media (max-width: 480px) {
             section { padding: 60px 15px 30px; } #home { padding-top: 90px; text-align: center; align-items: center; }
             h1 { font-size: 26px; text-align: center; width: 100%; margin-bottom: 12px; } p.subtitle { font-size: 13px; text-align: center; margin-bottom: 20px; }
@@ -365,19 +315,11 @@
             .fabric-info-section { padding: 20px 15px; } .fabric-header h3 { font-size: 18px; } .fabric-description { font-size: 13px; margin-bottom: 15px; text-align: justify; } .fabric-section-title { font-size: 15px; margin-top: 15px; margin-bottom: 10px; }
             .map-container { height: 250px; border-radius: 10px; } footer { padding: 35px 15px 15px; align-items: center; text-align: center; }
             .modal-content { padding: 15px; border-radius: 12px; } .modal-images { gap: 8px; margin: 10px 0 15px; } .modal-images img { height: 200px; } .img-label { font-size: 10px; padding: 2px 6px; } .wa-btn { font-size: 13px; padding: 10px 15px; width: 100%; justify-content: center; }
-            .welcome-text { font-size: 14px; letter-spacing: 4px; } .developed-text { font-size: 11px; letter-spacing: 2px; } .about-image { min-height: 290px; height: auto; } .nav-links { width: 65vw; }
+            .about-image { min-height: 290px; height: auto; } .nav-links { width: 65vw; }
         }
     </style>
 </head>
 <body>
-
-    <div id="loader">
-        <canvas id="loaderCanvas"></canvas>
-        <div class="loader-ui-overlay">
-            <h2 class="welcome-text">Pabrik Konveksi Klaten Terbaik</h2>
-            <p class="developed-text">CV. Djavu Indonesia</p>
-        </div>
-    </div>
 
     <canvas id="canvas-container"></canvas>
 
@@ -396,7 +338,7 @@
                 <button class="theme-btn interactive-asset" id="themeToggle" title="Ganti Mode Terang/Gelap">
                     <i class="fas fa-sun"></i>
                 </button>
-                <button class="menu-toggle interactive-asset" id="menuToggle">
+                <button class="menu-toggle interactive-asset" id="menuToggle" aria-label="Buka Menu Navigasi">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -430,7 +372,7 @@
                 <span class="highlight-text">Spesialis layanan kami meliputi pesanan buat kaos custom, pembuatan kemeja kerja lapangan (PDL/PDH), polo shirt bordir, jas almamater, hingga seragam instansi premium bergaya canggih.</span>
                 <p>Dalam menjalankan operasionalnya, setiap produk garmen dari jasa konveksi kami yang profesional di Klaten telah melewati Quality Control (QC) ekstra ketat. Mulai dari pemotongan kain, ketajaman cetak sablon, kerapian bordir komputer, hingga kepastian pengiriman, selalu menjadi prioritas utama demi kepuasan klien.</p>
             </div>
-            <div class="about-image" title="Workshop Konveksi Profesional di Klaten - CV Djavu Indonesia"></div>
+            <div class="about-image" title="Workshop Konveksi CV Djavu Indonesia" aria-label="Gambar ilustrasi ruangan workshop konveksi"></div>
         </div>
     </section>
 
@@ -470,8 +412,8 @@
             <div class="catalog-scroll-row animate-on-scroll" id="row-formal">
                 <div class="catalog-item interactive-asset" data-title="Jas Almamater Premium Klaten" data-img1="./buat-kaos-murah-klaten-almamater.webp" data-img2="./konveksi-profesional-klaten-real-almamater.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-almamater.webp" alt="Layanan Buat Kaos Murah Klaten - Model Jas Almamater" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-almamater.webp" alt="Konveksi Profesional Klaten - Real Pick Jas Almamater" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-almamater.webp" alt="Model menggunakan jas almamater biru gelap" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-almamater.webp" alt="Detail jahitan jas almamater kampus" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Jas Almamater / Blazer</h3>
@@ -484,8 +426,8 @@
             <div class="catalog-scroll-row animate-on-scroll" id="row-pdl">
                 <div class="catalog-item interactive-asset" data-title="Kemeja PDL Lapangan Klaten" data-img1="./buat-kaos-murah-klaten-pdl.webp" data-img2="./konveksi-profesional-klaten-real-pdl.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl.webp" alt="Pabrik Tempat Buat Kaos Murah Klaten - Kemeja PDL" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl.webp" alt="Konveksi Profesional Klaten - Hasil Kemeja PDL Lapangan" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-pdl.webp" alt="Kemeja kerja lapangan lengan panjang warna navy" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-pdl.webp" alt="Kemeja PDL hijau army terlipat rapi" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kemeja PDL Lapangan</h3>
@@ -494,8 +436,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kemeja PDL Komunitas Klasik" data-img1="./buat-kaos-murah-klaten-pdl-klasik.webp" data-img2="./konveksi-profesional-klaten-real-pdl-klasik.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-klasik.webp" alt="Layanan Buat Kaos Murah Klaten - Kemeja PDL Klasik" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-klasik.webp" alt="Konveksi Profesional Klaten - Real Kemeja PDL Komunitas" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-pdl-klasik.webp" alt="Kemeja PDL komunitas warna hitam kombinasi merah" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-pdl-klasik.webp" alt="Hasil jahitan kemeja PDL bordir komunitas" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kemeja PDL Klasik</h3>
@@ -504,8 +446,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kemeja PDL Corporate Uniform" data-img1="./buat-kaos-murah-klaten-pdl-korporat.webp" data-img2="./konveksi-profesional-klaten-real-pdl-korporat.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-korporat.webp" alt="Tempat Buat Kaos Murah Klaten - Kemeja Korporat" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-korporat.webp" alt="Konveksi Profesional Klaten - Seragam Karyawan Retail Resto" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-pdl-korporat.webp" alt="Kemeja seragam karyawan retail warna kombinasi abu dan merah" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-pdl-korporat.webp" alt="Seragam kemeja kerja restoran lipat rapi" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kemeja PDL Korporat</h3>
@@ -514,8 +456,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kemeja PDL Seragam Basic" data-img1="./buat-kaos-murah-klaten-pdl-basic.webp" data-img2="./konveksi-profesional-klaten-real-pdl-basic.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-pdl-basic.webp" alt="Vendor Tempat Buat Kaos Murah Klaten - Kemeja Basic" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-pdl-basic.webp" alt="Konveksi Profesional Klaten - Real Kemeja Bordir Komputer" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-pdl-basic.webp" alt="Kemeja PDL lengan pendek basic" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-pdl-basic.webp" alt="Detail bordir komputer pada kemeja PDL" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kemeja PDL Basic</h3>
@@ -528,8 +470,8 @@
             <div class="catalog-scroll-row animate-on-scroll" id="row-polo">
                 <div class="catalog-item interactive-asset" data-title="Kaos Polo Lacoste Lengan Panjang" data-img1="./buat-kaos-murah-klaten-lacoste-panjang.webp" data-img2="./konveksi-profesional-klaten-real-lacoste-panjang.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-lacoste-panjang.webp" alt="Jasa Buat Kaos Murah Klaten - Polo Lengan Panjang" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-lacoste-panjang.webp" alt="Konveksi Profesional Klaten - Kaos Polo Lengan Panjang" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-lacoste-panjang.webp" alt="Model pria memakai kaos polo kerah lengan panjang" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-lacoste-panjang.webp" alt="Kaos polo lengan panjang warna abu-abu gelap" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Lacoste Lengan Panjang</h3>
@@ -538,8 +480,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kaos Kerah Lacoste Sporty" data-img1="./buat-kaos-murah-klaten-polo-lacoste.webp" data-img2="./konveksi-profesional-klaten-real-polo-lacoste.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-polo-lacoste.webp" alt="Pabrik Buat Kaos Murah Klaten - Polo Lacoste" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-polo-lacoste.webp" alt="Konveksi Profesional Klaten - Foto Asli Polo Shirt" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-polo-lacoste.webp" alt="Pria memakai kaos kerah polo desain sporty" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-polo-lacoste.webp" alt="Detail kain bertekstur kerah dan kancing kaos polo" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kaos Kerah Lacoste</h3>
@@ -548,8 +490,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kaos Kerah Cotton Semi Formal" data-img1="./buat-kaos-murah-klaten-polo-cotton.webp" data-img2="./konveksi-profesional-klaten-real-polo-cotton.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-polo-cotton.webp" alt="Workshop Buat Kaos Murah Klaten - Polo Cotton" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-polo-cotton.webp" alt="Konveksi Profesional Klaten - Polo Cotton Combed" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-polo-cotton.webp" alt="Kaos kerah bahan katun warna terang untuk semi formal" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-polo-cotton.webp" alt="Tumpukan kaos polo katun combed berbagai warna" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kaos Kerah Cotton</h3>
@@ -558,8 +500,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kaos Kerah Lacoste Executive" data-img1="./buat-kaos-murah-klaten-lacoste-premium.webp" data-img2="./konveksi-profesional-klaten-real-lacoste-premium.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-lacoste-premium.webp" alt="Tempat Buat Kaos Murah Klaten - Polo Lacoste Premium" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-lacoste-premium.webp" alt="Konveksi Profesional Klaten - Polo Premium Instansi" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-lacoste-premium.webp" alt="Kaos polo seragam eksekutif warna biru tua" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-lacoste-premium.webp" alt="Kaos polo seragam instansi lipat rapi" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Lacoste Premium</h3>
@@ -568,12 +510,12 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Jaket Racing / Motor Sport" data-img1="./buat-kaos-murah-klaten-jaket-racing.webp" data-img2="./konveksi-profesional-klaten-real-jaket-racing.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-jaket-racing.webp" alt="Konveksi Profesional Klaten - Model Jaket Racing" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-jaket-racing.webp" alt="Buat Kaos Murah Klaten - Hasil Jaket Windbreaker" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-jaket-racing.webp" alt="Pria memakai jaket motor racing keren" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-jaket-racing.webp" alt="Jaket windbreaker parasut warna kombinasi biru hitam" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
-                        <h3>Lacoste Lengan Panjang</h3>
-                        <p>windproof, pilihan solid club otomotif.</p>
+                        <h3>Jaket Racing Club</h3>
+                        <p>Windproof, pilihan solid club otomotif dan komunitas pengendara.</p>
                     </div>
                 </div>
             </div>
@@ -582,8 +524,8 @@
             <div class="catalog-scroll-row animate-on-scroll" id="row-kaos">
                 <div class="catalog-item interactive-asset" data-title="Kaos Sablon Plastisol Premium" data-img1="./buat-kaos-murah-klaten-sablon-premium.webp" data-img2="./konveksi-profesional-klaten-real-sablon-premium.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-sablon-premium.webp" alt="Pusat Buat Kaos Murah Klaten - Kaos Sablon" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-sablon-premium.webp" alt="Konveksi Profesional Klaten - Sablon Anti Retak" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-sablon-premium.webp" alt="Kaos oblong casual dengan sablon plastisol grafis" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-sablon-premium.webp" alt="Detail tekstur sablon menempel rata pada kain hitam" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kaos Sablon Premium</h3>
@@ -592,8 +534,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kaos Olahraga Dry-Fit Klaten" data-img1="./buat-kaos-murah-klaten-dryfit.webp" data-img2="./konveksi-profesional-klaten-real-dryfit.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-dryfit.webp" alt="Garmen Buat Kaos Murah Klaten - Jersey Olahraga" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-dryfit.webp" alt="Konveksi Profesional Klaten - Kaos Dry Fit Microfiber" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-dryfit.webp" alt="Pria lari memakai kaos olahraga dry-fit warna kuning neon" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-dryfit.webp" alt="Serat bahan kaos jenis microfiber dry fit yang berpori" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kaos Olahraga Dry-Fit</h3>
@@ -602,8 +544,8 @@
                 </div>
                 <div class="catalog-item interactive-asset" data-title="Kaos Casual Cotton Combed Asli" data-img1="./buat-kaos-murah-klaten-cotton-combed.webp" data-img2="./konveksi-profesional-klaten-real-cotton-combed.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-cotton-combed.webp" alt="Konveksi Profesional Klaten - Kaos Cotton Combed" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-cotton-combed.webp" alt="Tempat Buat Kaos Murah Klaten - T-Shirt Distro" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-cotton-combed.webp" alt="Pria muda memakai kaos polos casual warna mustard" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-cotton-combed.webp" alt="Tumpukan kaos t-shirt cotton combed standar distro" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Kaos Cotton Combed</h3>
@@ -616,8 +558,8 @@
             <div class="catalog-scroll-row animate-on-scroll" id="row-bomber">
                 <div class="catalog-item interactive-asset" data-title="Jaket Bomber Casual Corporate" data-img1="./buat-kaos-murah-klaten-bomber.webp" data-img2="./konveksi-profesional-klaten-real-bomber.webp">
                     <div class="catalog-images">
-                        <img src="./buat-kaos-murah-klaten-bomber.webp" alt="Buat Kaos Murah Klaten - Jaket Bomber Premium" class="img-model">
-                        <img src="./konveksi-profesional-klaten-real-bomber.webp" alt="Konveksi Profesional Klaten - Foto Jaket Bomber Perusahaan" class="img-real">
+                        <img src="./buat-kaos-murah-klaten-bomber.webp" alt="Pria memakai jaket bomber casual untuk seragam" class="img-model" loading="lazy" decoding="async">
+                        <img src="./konveksi-profesional-klaten-real-bomber.webp" alt="Hasil produksi jaket bomber tebal warna army" class="img-real" loading="lazy" decoding="async">
                     </div>
                     <div class="item-info">
                         <h3>Jaket Bomber Windproof</h3>
@@ -727,7 +669,7 @@
     <section id="location" class="animate-on-scroll">
         <h2 class="section-title">Alamat Konveksi Profesional Klaten</h2>
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d213.95154383471382!2d110.58480573485252!3d-7.743230401419015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a444cc535a423%3A0xd5e989bd81a8b3c1!2sQ'Mutan%20Itik%20-%20Kancing!5e1!3m2!1sid!2sid!4v1780682131589!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Workshop Buat Kaos Murah Klaten - CV Djavu Indonesia"></iframe>
+            <iframe src="https://maps.google.com/maps?q=-7.731454,110.597549&hl=id&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Workshop Buat Kaos Murah Klaten - CV Djavu Indonesia"></iframe>
         </div>
     </section>
 
@@ -748,7 +690,7 @@
                 <div class="copyright">© 2026 CV. Djavu Indonesia | Tempat Buat Kaos Murah Klaten | Konveksi Profesional Klaten. All Rights Reserved.</div>
                 <div class="developer-tag">
                     developed by Ahmad Fahril 
-                    <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: var(--accent-blue);" title="System Core Release SEO V3 Cloudflare Edge True-Hybrid with Cyber Accents">v1.26.06.11.CF-Hybrid</span>
+                    <span class="version-tag" style="opacity: 0.6; font-size: 0.85em; margin-left: 5px; font-family: monospace; color: var(--accent-blue);" title="System Core Release SEO V3 Cloudflare Edge True-Hybrid with Cyber Accents">v1.26.06.13.SEO-Optimized</span>
                 </div>
             </div>
         </div>
@@ -761,11 +703,11 @@
             <div class="modal-images">
                 <div class="img-container">
                     <span class="img-label">Model Preview</span>
-                    <img id="modalImg1" src="" alt="Konveksi Profesional Klaten Mock Up Desain">
+                    <img id="modalImg1" src="" alt="Desain model mock up produk apparel">
                 </div>
                 <div class="img-container">
                     <span class="img-label">Real Pick</span>
-                    <img id="modalImg2" src="" alt="Tempat Buat Kaos Murah Klaten Hasil Jadi Apparel">
+                    <img id="modalImg2" src="" alt="Hasil jadi produksi seragam asli">
                 </div>
             </div>
             <a id="modalWaBtn" href="#" target="_blank" class="wa-btn interactive-asset"><i class="fab fa-whatsapp"></i> Dapatkan Penawaran Harga di Klaten</a>
@@ -773,164 +715,6 @@
     </div>
 
     <script>
-        // ==================================================
-        // --- ENGINE 1: CINEMATIC LOGO LOADER OPTIMIZED ---
-        // ==================================================
-        const loaderCanvas = document.getElementById('loaderCanvas');
-        const lCtx = loaderCanvas.getContext('2d', { willReadFrequently: true });
-        const loaderContainer = document.getElementById('loader');
-        function resizeLoaderCanvas() {
-            loaderCanvas.width = window.innerWidth;
-            loaderCanvas.height = window.innerHeight;
-        }
-        resizeLoaderCanvas();
-
-        let lParticles = [];
-        let lTimeline = 0;
-        let lCurrentPhase = 0; 
-        let lLogoLoaded = false;
-        let lLogoRect = { x: 0, y: 0, w: 0, h: 0 };
-        let lAnimationId;
-
-        const lLogoImg = new Image();
-        lLogoImg.src = './logo-buat-kaos-murah-klaten.webp';
-        lLogoImg.onload = function() {
-            lLogoLoaded = true;
-            calculateLoaderLogoPos();
-            createLoaderParticles();
-            animateLoader();
-        };
-
-        lLogoImg.onerror = function() {
-            loaderContainer.classList.add('fade-out-cinematic'); 
-            document.body.classList.add('site-active');
-            setTimeout(() => loaderContainer.style.display = 'none', 500); 
-        };
-
-        function calculateLoaderLogoPos() {
-            const maxBoundingSize = Math.min(window.innerWidth * 0.85, 420);
-            let scale = Math.min(maxBoundingSize / lLogoImg.naturalWidth, maxBoundingSize / lLogoImg.naturalHeight);
-            lLogoRect.w = lLogoImg.naturalWidth * scale;
-            lLogoRect.h = lLogoImg.naturalHeight * scale;
-            lLogoRect.x = (loaderCanvas.width - lLogoRect.w) / 2;
-            lLogoRect.y = (loaderCanvas.height - lLogoRect.h) / 2;
-        }
-
-        class StoneFragment {
-            constructor(sx, sy, sw, sh, dx, dy, dw, dh) {
-                this.sx = sx; this.sy = sy; this.sw = sw; this.sh = sh;
-                this.origX = dx; this.origY = dy;
-                this.x = dx; this.y = dy;
-                this.dw = dw; this.dh = dh;
-                this.vx = (Math.random() - 0.5) * 25;
-                this.vy = (Math.random() - 0.5) * 25 - Math.random() * 8; 
-                this.angle = 0;
-                this.va = (Math.random() - 0.5) * 0.4; 
-                this.alpha = 1;
-                this.burnProgress = 0;
-            }
-            updateShatter() {
-                this.x += this.vx;
-                this.y += this.vy; this.angle += this.va;
-                this.vx *= 0.95; this.vy *= 0.95; this.vy += 0.2;
-                this.burnProgress += (1 - this.burnProgress) * 0.04; 
-                this.alpha -= 0.01; 
-                if (this.alpha < 0) this.alpha = 0;
-            }
-            updateReverse() {
-                this.x += (this.origX - this.x) * 0.18;
-                this.y += (this.origY - this.y) * 0.18;
-                this.angle += (0 - this.angle) * 0.18;
-                this.burnProgress += (0 - this.burnProgress) * 0.18;
-                this.alpha += (1 - this.alpha) * 0.18;
-            }
-            draw() {
-                if (this.alpha <= 0) return;
-                lCtx.save();
-                lCtx.translate(this.x + this.dw / 2, this.y + this.dh / 2);
-                lCtx.rotate(this.angle);
-                lCtx.globalAlpha = this.alpha;
-                lCtx.drawImage(lLogoImg, this.sx, this.sy, this.sw, this.sh, -this.dw / 2, -this.dh / 2, this.dw, this.dh);
-                if (this.burnProgress > 0) {
-                    lCtx.fillStyle = `rgba(12, 12, 18, ${this.burnProgress * 0.95})`;
-                    lCtx.fillRect(-this.dw / 2, -this.dh / 2, this.dw, this.dh);
-                }
-                lCtx.restore();
-            }
-        }
-
-        function createLoaderParticles() {
-            lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
-            lCtx.drawImage(lLogoImg, lLogoRect.x, lLogoRect.y, lLogoRect.w, lLogoRect.h);
-            const imgData = lCtx.getImageData(lLogoRect.x, lLogoRect.y, lLogoRect.w, lLogoRect.h);
-            lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
-
-            const cols = 8; const rows = 8; 
-            const srcBlockW = lLogoImg.naturalWidth / cols; const srcBlockH = lLogoImg.naturalHeight / rows;
-            const destBlockW = lLogoRect.w / cols; const destBlockH = lLogoRect.h / rows;
-            lParticles = [];
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    let checkX = Math.floor((c + 0.5) * destBlockW);
-                    let checkY = Math.floor((r + 0.5) * destBlockH);
-                    let pixelIndex = (checkY * Math.floor(lLogoRect.w) + checkX) * 4;
-                    if (imgData.data[pixelIndex + 3] > 40) {
-                        lParticles.push(new StoneFragment(
-                            c * srcBlockW, r * srcBlockH, srcBlockW, srcBlockH,
-                            lLogoRect.x + c * destBlockW, lLogoRect.y + r * destBlockH, destBlockW, destBlockH
-                        ));
-                    }
-                }
-            }
-        }
-
-        function animateLoader() {
-            if (!lLogoLoaded || lCurrentPhase === 4) return;
-            lCtx.clearRect(0, 0, loaderCanvas.width, loaderCanvas.height);
-            lTimeline++;
-
-            if (lTimeline === 1) { lCurrentPhase = 0; } 
-            else if (lTimeline === 25) { 
-                lCurrentPhase = 1;
-                loaderContainer.classList.add('lightning-flash-screen');
-                setTimeout(() => loaderContainer.classList.remove('lightning-flash-screen'), 200);
-            } 
-            else if (lTimeline === 65) { lCurrentPhase = 2; } 
-            else if (lTimeline === 95) { 
-                lCurrentPhase = 3;
-                loaderCanvas.classList.add('loader-canvas-glow');
-            } 
-            else if (lTimeline === 120) { 
-                lCurrentPhase = 4;
-                loaderContainer.classList.add('fade-out-cinematic'); 
-                document.body.classList.add('site-active'); 
-                setTimeout(() => {
-                    loaderContainer.style.display = 'none';
-                    lParticles = []; 
-                    cancelAnimationFrame(lAnimationId);
-                }, 500);
-                return;
-            }
-
-            if (lCurrentPhase === 0 || lCurrentPhase === 3) {
-                lCtx.drawImage(lLogoImg, lLogoRect.x, lLogoRect.y, lLogoRect.w, lLogoRect.h);
-            } else {
-                lParticles.forEach(p => {
-                    if (lCurrentPhase === 1) p.updateShatter();
-                    if (lCurrentPhase === 2) p.updateReverse();
-                    p.draw();
-                });
-            }
-            lAnimationId = requestAnimationFrame(animateLoader);
-        }
-
-        window.addEventListener('resize', () => {
-            if (lCurrentPhase < 4) {
-                resizeLoaderCanvas();
-                if (lLogoLoaded) { calculateLoaderLogoPos(); createLoaderParticles(); }
-            }
-        });
-
         // =========================================================================
         // --- ENGINE 2: ADVANCED SCROLL/CLICK ANIMATIONS & INTERACTIVE BACKDROP ---
         // =========================================================================
@@ -965,7 +749,7 @@
             }
         });
 
-        // RE-TRIGGER SCROLL ANIMATION (UP AND DOWN) VIA MODERN INTERSECTION OBSERVER
+        // RE-TRIGGER SCROLL ANIMATION (Hanya terlihat efeknya di Layar Lebar karena pembatasan CSS)
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -991,8 +775,16 @@
         function initMainParticles() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
+            
+            // SEO PERFORMANCE FIX: Matikan render partikel berat di Smartphone
+            if (width <= 768) {
+                ctx.clearRect(0, 0, width, height);
+                particles = [];
+                return;
+            }
+
             particles = [];
-            const baseDivisor = width < 768 ? 45 : 30;
+            const baseDivisor = 30;
             const particleCount = Math.min(Math.floor(width / baseDivisor), 55); 
             for (let i = 0; i < particleCount; i++) { 
                 particles.push(new Particle(i));
@@ -1007,7 +799,7 @@
                 this.vy = (Math.random() - 0.5) * 0.8;
                 this.baseRadius = Math.random() * 1.5 + 0.6;
                 this.radius = this.baseRadius;
-                this.isBlue = index % 3 === 0; // Sepertiga partikel warna biru aksen
+                this.isBlue = index % 3 === 0;
             }
             update() {
                 let dx = this.x - pointer.x;
@@ -1050,9 +842,12 @@
         window.addEventListener('mouseleave', resetPointer);
 
         function animateMainSite() {
+            // Hentikan perulangan jika partikel dikosongkan (di mode mobile)
+            if (!particles || particles.length === 0) return;
+
             ctx.fillStyle = canvasFadeColor;
             ctx.fillRect(0, 0, width, height);
-            const connectionDistance = width < 480 ? 75 : 120;
+            const connectionDistance = 120;
             const len = particles.length;
 
             for (let i = 0; i < len; i++) {
@@ -1065,7 +860,6 @@
 
                     if (distance < connectionDistance) {
                         ctx.beginPath();
-                        // Garis penghubung akan menyesuaikan warna
                         if(particles[i].isBlue || particles[j].isBlue){
                             ctx.strokeStyle = `rgba(0, 212, 255, ${(1 - distance/connectionDistance) * 0.4})`;
                         } else {
@@ -1104,10 +898,8 @@
         const modalImg2 = document.getElementById('modalImg2');
         const modalWaBtn = document.getElementById('modalWaBtn');
         
-        // --- INISIALISASI MODAL UNTUK ITEM STATIS YANG SUDAH ADA DI HTML ---
         function attachModalToItems(items) {
             items.forEach(item => {
-                // Menghindari binding ganda jika script dijalankan ulang
                 if(!item.hasAttribute('data-modal-bound')) {
                     item.addEventListener('click', () => {
                         const title = item.getAttribute('data-title');
@@ -1123,7 +915,6 @@
                 }
             });
         }
-        // Terapkan ke item statis
         attachModalToItems(document.querySelectorAll('.catalog-item'));
 
         closeModalBtn.addEventListener('click', () => { modal.classList.remove('show'); });
@@ -1138,13 +929,9 @@
                 const catalogContainer = document.getElementById('dynamicCatalogContainer');
                 if (!catalogContainer || dynamicProducts.length === 0) return;
                 
-                // PENTING: Jangan gunakan innerHTML = '' agar HTML Statis tetap bertahan!
-                // Cukup append data dinamis ke dalam container yang sudah ada.
-                
                 dynamicProducts.forEach(product => {
                     let targetRow = document.getElementById(`row-${product.category}`);
                     
-                    // Jika kategori belum ada di HTML statis, buat header dan row baru
                     if (!targetRow) {
                         const newHeader = document.createElement('h3');
                         newHeader.className = 'catalog-category-title animate-on-scroll';
@@ -1167,8 +954,8 @@
                         itemDiv.setAttribute('data-img2', product.img2);
                         itemDiv.innerHTML = `
                             <div class="catalog-images">
-                                <img src="${product.img1}" alt="${product.title} - Layanan Konveksi di Klaten" class="img-model" loading="lazy">
-                                <img src="${product.img2}" alt="Portofolio Asli ${product.title} - Buat Seragam di Klaten" class="img-real" loading="lazy">
+                                <img src="${product.img1}" alt="${product.title} referensi desain mock up" class="img-model" loading="lazy" decoding="async">
+                                <img src="${product.img2}" alt="Hasil produksi asli ${product.title}" class="img-real" loading="lazy" decoding="async">
                             </div>
                             <div class="item-info">
                                 <h3>${product.title}</h3>
@@ -1179,10 +966,7 @@
                     }
                 });
                 
-                // Pasang trigger modal untuk item-item dinamis yang baru saja di-append
                 attachModalToItems(document.querySelectorAll('.catalog-item'));
-                
-                // Trigger ulang observer animasi
                 updateScrollTriggers();
             } catch (error) {
                 console.error("Cloud Dynamic Engine Error:", error);
